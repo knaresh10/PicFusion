@@ -5,16 +5,13 @@ const profileSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User'
     },
+    fullName : {
+        type : String,
+    },
     profilePic : {type : String},
     about : {type : String},
-    username : {
-        type : String,
-        unique : true
-    },
-    boards : {
-        type : Array,
-        default : []
-    }
+    createdAt: { type: Date, default: Date.now },
+    updatedAt: { type: Date, default: Date.now }
 });
 
 const Profile = mongoose.model('Profile', profileSchema);
