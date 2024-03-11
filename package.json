@@ -1,0 +1,41 @@
+{
+  "name": "pinterest-clone",
+  "version": "1.0.0",
+  "description": "## Project Description picFusion is a Pinterest clone that allows users to discover, save, and share images on personalized boards. Users can register and log in to their accounts, create boards to organize their saved pins, and explore a feed of curated images. With an intuitive interface and powerful features, picFusion makes it easy for users to find inspiration and express their creativity.",
+  "main": "server.js",
+  "scripts": {
+    "start": "nodemon server.js",
+    "build:css": "postcss public/css/style.css -o public/css/styles1.css",
+    "build": "npx tailwindcss -i ./public/css/style.css -o ./public/css/output.css --watch"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/knaresh10/PicFusion.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/knaresh10/PicFusion/issues"
+  },
+  "homepage": "https://github.com/knaresh10/PicFusion#readme",
+  "dependencies": {
+    "@tailwindcss/forms": "^0.5.7",
+    "autoprefixer": "^10.4.18",
+    "bcrypt": "^5.1.1",
+    "cookie-parser": "^1.4.6",
+    "dotenv": "^16.4.5",
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "express-session": "^1.18.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.2.0",
+    "multer": "^1.4.5-lts.1",
+    "postcss-cli": "^11.0.0",
+    "tailwindcss": "^3.4.1",
+    "uuid": "^9.0.1"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.0"
+  }
+}
