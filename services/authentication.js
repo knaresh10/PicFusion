@@ -6,7 +6,7 @@ const secret = process.env.JWT_SECRET_KEY;
 const createTokenForUser = (user) => {
     const payLoad = {
         _id : user._id,
-        name : user.fullname,
+        name : user.username,
         email : user.email,
     }
 

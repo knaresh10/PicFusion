@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+    href="https://cdn.jsdelivr.net/npm/remixicon@4.2.0/fonts/remixicon.css"
+    rel="stylesheet"
+/>
+    <link rel="stylesheet" href="/css/output.css">
+    <title>Profile Setup</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="w-full flex flex-col items-center">
+        <h3 class="text-2xl font-bold p-3">Edit profile</h3>
+        <hr class="opacity-65">
+        <div class="w-full flex flex-col items-center">
+            <div class="relative">
+                <span class=" w-10 h-10 absolute bottom-0 right-0 rounded-full flex items-center justify-center bg-zinc-200">
+                    <i class="text-zinc-800 ri-pencil-fill" id="upload-icon"></i>
+                </span>
+                <div class="w-40 h-40 rounded-full overflow-hidden border-2">
+                    <img id="profile-display" src="/images/Learning-bro.svg" alt="profile pic" class="w-full h-full object-cover">
+                </div>
+            </div>
+            <div class="mx-auto max-w-[800px] px-4 sm:px-6 lg:px-8">
+                <div class="mx-auto min-w-[475px] max-w-lg">
+                  <form action="/profile/edit" method="post" enctype="multipart/form-data" class="mb-0 mt-2 space-y-4 rounded-lg p-4 sm:p-6 lg:p-8">
+                    <input hidden type="file" id="profile-pic" name="profile-pic">
+                    <!-- for full name input tag -->
+                    <div>
+                        <label for="fullname" class="sr-only">Fullname</label>
+                
+                        <div class="relative">
+                          <input
+                            type="text"
+                            class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                            placeholder="Enter Full Name"
+                            name="fullname"
+                          />
+                        </div>
+                    </div>
+                    <!-- for textarea  tag -->
+                    <div>
+                      <label for="about" class="sr-only">About</label>
+              
+                      <div class="relative">
+                        <textarea name="about" class="w-full min-h-16 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="tell about your story"></textarea>
+                      </div>
+                    </div>
+
+                    <div>
+                        <label for="DOB" class="sr-only">Date of Birth</label>
+                        <div class="relative">
+                          <input
+                            type="date"
+                            class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                            name="DOB"
+                          />
+                        </div>
+                    </div>
+
+                    <button
+                      type="submit"
+                      class="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+                    >
+                      Save
+                    </button>
+              
+                    
+                  </form>
+                </div>
+              </div>
+        </div>
+    </div>
+    <script>
+        document.querySelector('#upload-icon').addEventListener('click', () => {
+            document.querySelector('#profile-pic').click();
+        });
+
+        document.querySelector('#profile-pic').addEventListener('change', (event) => {
+            const input = event.target;
+            if(input.files && input.files[0]) {
+                const reader = new FileReader();
+                reader.onload = (e) => {
+                    document.querySelector('#profile-display').src = e.target.result;
+                };
+                reader.readAsDataURL(input.files[0]);
+            }
+        })
+    </script>
+</body>
+</html>

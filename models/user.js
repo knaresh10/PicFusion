@@ -17,6 +17,10 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
+    profileSetupCompleted : {
+        type : Boolean,
+        default : false,
+    },
     createdAt : {
         type : Date,
         default : Date.now
@@ -26,8 +30,6 @@ const userSchema = new mongoose.Schema({
         default : Date.now
     }
 });
-
-
 
 userSchema.pre('save', async function(next) {
     const salt = await bcrypt.genSalt();

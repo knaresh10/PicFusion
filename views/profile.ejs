@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css">
+    <title>Profile Page</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container">
+        <!-- user details -->
+        <div class="w-lvw flex flex-col items-center">
+            <div class="w-40 h-40 rounded-full overflow-hidden border-2">
+                <img id="profile-display" src="/images/uploads/<%= profileData.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
+            </div>
+            <h3 class="mt-2 text-2xl"><%= profileData.fullName %></h3>
+            <p class="mt-2 text-sm">@username</p>
+        </div>
+        <!-- user boards -->
+    </div>
+</body>
+</html>

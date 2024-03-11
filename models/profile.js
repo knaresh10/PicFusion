@@ -5,11 +5,27 @@ const profileSchema = new mongoose.Schema({
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User'
     },
-    fullName : {
+    fullname : {
         type : String,
     },
-    profilePic : {type : String},
-    about : {type : String},
+    about : {
+        type : String,
+    },
+    DOB : {
+        type : Date
+    },
+    profilePic : {
+        type : String,
+        default : "learning-bro.svg"
+    },
+    pins : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref  : 'Pin'
+    }],
+    boards : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Board'
+    }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });
