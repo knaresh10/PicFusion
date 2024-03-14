@@ -8,16 +8,29 @@
 </head>
 <body>
     <%- include('./partials/nav') %>
-    <div class="container">
+    <div class="w-full mt-[80px] mb-8">
         <!-- user details -->
         <div class="w-lvw flex flex-col items-center">
             <div class="w-40 h-40 rounded-full overflow-hidden border-2">
                 <img id="profile-display" src="/images/uploads/<%= profileData.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
             </div>
-            <h3 class="mt-2 text-2xl"><%= profileData.fullName %></h3>
-            <p class="mt-2 text-sm">@username</p>
+            <h3 class="mt-2 text-2xl"><%= profileData.fullname %></h3>
+            <p class="mt-2 text-sm">@<%= user.name %></p>
+
+            <a href="/profile/edit">
+                <button class="mt-10 bg-slate-300 p-3 rounded-lg font-semibold">Edit profile</button>
+            </a>
         </div>
+        <!-- <hr class=" mt-2 opacity-85 w-[100vw]"> -->
         <!-- user boards -->
+        <div class="w-full mt-6 pt-3 px-5 flex flex-wrap gap-3 justify-center">
+            <% profileData.pins.forEach(pin => { %>
+                <div class="w-[236px] h-auto rounded-3xl overflow-hidden">
+                    <!-- <div class="w-full h-full z-10 opacity-30"></div> -->
+                    <img src="/images/uploads/<%= pin.image %>" class=" w-full h-full object-cover" alt="pin">
+                </div>
+            <% }) %>
+        </div>
     </div>
 </body>
 </html>

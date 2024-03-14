@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const User = require('./user');
+const Pin = require('./pin')
 
 const boardSchema = new mongoose.Schema({
     title : {
@@ -19,6 +21,6 @@ const boardSchema = new mongoose.Schema({
     updatedAt: { type: Date, default: Date.now }
 });
 
-const Board = mongoose.model('Post', boardSchema);
+const Board = mongoose.model('Board', boardSchema);
 
 module.exports = Board;

@@ -1,4 +1,7 @@
 const mongoose = require('mongoose');
+const Pin = require('./pin');
+const User = require('./user');
+const Board = require('./board');
 
 const profileSchema = new mongoose.Schema({
     user : {
@@ -17,6 +20,10 @@ const profileSchema = new mongoose.Schema({
     profilePic : {
         type : String,
         default : "learning-bro.svg"
+    },
+    profileSetupCompleted : {
+        type : Boolean,
+        default : false,
     },
     pins : [{
         type : mongoose.Schema.Types.ObjectId,

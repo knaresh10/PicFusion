@@ -17,10 +17,6 @@ const userSchema = new mongoose.Schema({
         type : String,
         required : true,
     },
-    profileSetupCompleted : {
-        type : Boolean,
-        default : false,
-    },
     createdAt : {
         type : Date,
         default : Date.now
@@ -51,6 +47,6 @@ userSchema.static('matchPasswordAndGenerateToken', async function (email, passwo
     return createTokenForUser(user);
 })
 
-const User = mongoose.model("user", userSchema);
+const User = mongoose.model("User", userSchema);
 
 module.exports = User;

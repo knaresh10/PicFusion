@@ -5,7 +5,7 @@ const { handleCreatePin } = require('../controllers/pin');
 const router = Router();
 
 router.get('/create', (req, res) => {
-        return res.render('create')
+        return res.render('create', {user : req.user})
     }
 );
 

@@ -1,5 +1,6 @@
 const User = require('../models/user');
 const Pin = require('../models/pin');
+const Profile = require('../models/profile');
 
 const handleCreatePin = async (req, res) => {
     if (req.fileValidationError) {
@@ -10,7 +11,7 @@ const handleCreatePin = async (req, res) => {
     }
     const {title, description} = req.body;
 
-    const user = await User.find({email : req.user.email})
+    const user = await User.findOne({email : req.user.email})
 
     const pin = await Pin.create({
         title,
@@ -19,9 +20,13 @@ const handleCreatePin = async (req, res) => {
         author : user._id
     });
 
+    const profile = await Profile.findOne({user : user._id});
+    console.log(profile);
+    profile.pins.push(pin._id);
+    profile.save();
     console.log(pin);
     console.log(title, description, req.file.filename);
-    return res.redirect('/');
+    return res.redirect('/feed');
 }
 
 

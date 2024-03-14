@@ -16,9 +16,10 @@ const handleVerifyUser = async (req, res) => {
     const {email, password} = req.body;
     try {
         const token = await User.matchPasswordAndGenerateToken(email, password);
-        const user = User.find({email});
-        if(!user.profileSetupCompleted) return res.cookie('token', token).redirect('/profile/edit');
-        res.cookie('token', token).redirect('/');
+        const user = User.findOne({email});
+        const profile = Profile.findOne({user : user._id});
+        if(!profile) return res.cookie('token', token).redirect('/profile/edit');
+        res.cookie('token', token).redirect('/feed');
     } catch (e) {
         console.log(e);
     }
@@ -36,14 +37,10 @@ const handleProfileEdit = async (req, res) => {
     });
 
     const user = await User.findById(req.user._id);
-
-    user.profileSetupCompleted = true
-    
-    user.save();
     
     console.log(result);
 
-    return res.redirect('/')
+    return res.redirect('/feed')
 }
 
 module.exports = {
