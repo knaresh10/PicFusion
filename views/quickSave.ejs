@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css">
+    <title>Quick Save</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="w-full mt-2 px-8 py-2 flex flex-col items-center">
+        <p class="text-4xl font-bold">Quick Saves</p>
+        <div class="w-full justify-center flex flex-wrap gap-5 my-3">
+            <div class="p-5 sm:p-8">
+                <div class="columns-1 gap-5 sm:columns-2 sm:gap-8 md:columns-4 lg:columns-5 [&>div:not(:first-child)]:mt-8">
+                    <% profile.quickSave.forEach(pin => { %>
+                        <div class="h-auto rounded-3xl overflow-hidden shadow-md">
+                            <!-- <div class="w-full h-full z-10 opacity-30"></div> -->
+                            <a href="/pin/<%= pin._id %>"><img src="/images/uploads/<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

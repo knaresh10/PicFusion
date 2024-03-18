@@ -21,7 +21,7 @@
                     <i class="text-zinc-800 ri-pencil-fill" id="upload-icon"></i>
                 </span>
                 <div class="w-40 h-40 rounded-full overflow-hidden border-2">
-                    <img id="profile-display" src="/images/Learning-bro.svg" alt="profile pic" class="w-full h-full object-cover">
+                    <img id="profile-display" src="/images/uploads/<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
                 </div>
             </div>
             <div class="mx-auto max-w-[800px] px-4 sm:px-6 lg:px-8">
@@ -29,6 +29,7 @@
                   <form action="/profile/edit" method="post" enctype="multipart/form-data" class="mb-0 mt-2 space-y-4 rounded-lg p-4 sm:p-6 lg:p-8">
                     <input hidden type="file" id="profile-pic" name="profile-pic">
                     <!-- for full name input tag -->
+
                     <div>
                         <label for="fullname" class="sr-only">Fullname</label>
                 
@@ -38,6 +39,7 @@
                             class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                             placeholder="Enter Full Name"
                             name="fullname"
+                            value="<%= profile.fullname %>"
                           />
                         </div>
                     </div>
@@ -46,7 +48,8 @@
                       <label for="about" class="sr-only">About</label>
               
                       <div class="relative">
-                        <textarea name="about" class="w-full min-h-16 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" placeholder="tell about your story"></textarea>
+                        <textarea name="about" class="w-full min-h-16 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" 
+                        placeholder="tell about your story"><%= profile.about %></textarea>
                       </div>
                     </div>
 

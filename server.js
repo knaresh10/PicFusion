@@ -26,18 +26,20 @@ app.use(cookieParser());
 // middlewares
 app.use(checkForAuthentication('token'));
 
-// connections
-mongoose.connect(URL)
-.then(() => console.log('mongodb connected'));
-
 // routers
 app.use('/', mainRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/pin', pinRouter);
 app.use('/board', boardRouter);
+// connections
+mongoose.connect(URL)
+.then(() => {
+    app.listen(PORT, () => {
+        console.log(`The server is running on port http://localhost:${PORT}`)
+    })
+    console.log('mongodb connected')});
 
 
-app.listen(PORT, () => {
-    console.log(`The server is running on port http://localhost:${PORT}`)
-})
+
+

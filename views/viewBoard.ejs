@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css">
+    <title>view Board</title>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="flex flex-col items-center mt-5">
+        <h1 class="text-3xl font-bold"><%= board.title %></h1>
+        <!-- feed -->
+        <div class="w-full justify-center flex flex-wrap gap-5 my-3">
+            <div class="p-5 sm:p-8">
+                <div class="columns-1 gap-5 sm:columns-2 sm:gap-8 md:columns-4 lg:columns-5 [&>div:not(:first-child)]:mt-8">
+                    <% board.pins.forEach(pin => { %>
+                        <div class="h-auto rounded-3xl overflow-hidden">
+                            <a href="/pin/<%= pin._id %>"><img src="/images/uploads/<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
+                        </div>
+                    <% }) %>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,115 @@
+<div class="py-8 w-full flex items-center justify-center">
+    <div class="rounded-3xl w-[50%] overflow-hidden flex gap-4 shadow-lg">
+        <div class="w-1/2 overflow-hidden ">
+            <img src="/images/uploads/<%= pin.image %>" alt="" class="w-full h-auto object-cover">
+        </div>
+        <div class="w-1/2  py-7 flex flex-col">
+            <!-- different buttons -->
+            <div class="w-full px-7 flex justify-between">
+                <div class="flex flex-row gap-5 items-center">
+                    <span class="material-symbols-outlined">
+                        ios_share
+                    </span>
+                    <span class="material-symbols-outlined">
+                        more_horiz
+                        </span>
+                </div>
+                <div class="flex flex-row items-center gap-2">
+                <% var isPinSaved = false; %>
+                <% var savedBoardName = ''; %>
+                <% let savedBoardId = ''; %>
+
+                <% profile.savedPins.forEach(function(savedPin) { %>
+                    <% if (savedPin.pin.equals(pin._id)) { %>
+                        <% isPinSaved = true; %>
+                        <% savedBoardName = savedPin.board.title; %>
+                        <% savedBoardId = savedPin.board._id; %>
+                    <% } %>
+                <% }); %>
+
+                <% if (isPinSaved) { %>
+                    <p><%= savedBoardName %></p>
+                    <a href="/pin/unsave/<%= pin._id%>/<%= savedBoardId %>" class="border-none bg-slate-500 px-4 py-3 rounded-2xl text-white">Saved</a>
+                <% } else { %>
+                    <!-- <p>This pin is not saved.</p> -->
+                    <div class="">
+                        <button id="board-search" class="flex flex-row justify-center">Profile <span class="material-symbols-outlined">
+                            expand_more
+                        </span></button>
+                        
+                    </div>
+                    <a href="/pin/save/<%= pin._id %>" class="border-none bg-red-600 px-4 py-3 rounded-2xl text-white">save</a>
+                <% } %>
+
+                </div>
+            </div>
+
+            <!-- pin details -->
+            <div class="w-full px-7 mt-4">
+                <h2 class="mb-4 text-xl font-semibold"><%= pin.title %></h2>
+                <div class="w-full mb-4">
+                    <%- include('./profileStat') %>
+                </div>
+                <!-- <p class="whitespace-nowrap overflow-hidden text-ellipsis w-full max-h-28">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio ex consectetur, veritatis aliquam corporis expedita perspiciatis aliquid ducimus reprehenderit.. </p> -->
+            </div>
+
+            <!-- comment section -->
+            <div class="flex flex-grow ">
+                <%- include('./comments') %>
+            </div>
+
+            <!-- add comment --> 
+            <div class="px-7 py-4 w-full">
+                <form action="">
+                    <div class="flex justify-between py-4">
+                        <h4 class="text-xl font-semibold">What do you think?</h4>
+                        <div class="flex flex-row gap-3">
+                            <!-- likes with count -->
+                            <div class="flex flex-row gap-1">
+                                <span class="material-symbols-outlined ">
+                                    favorite
+                                </span>
+                                <p>20</p>
+                            </div>
+                            <span class="material-symbols-outlined">
+                                heart_plus
+                            </span>
+                        </div>
+                    </div>
+                    <div class="flex flex-row w-full gap-3">
+                        <div class="w-14 h-14  rounded-full overflow-hidden border-1 border-black">
+                            <img src="/images/uploads/<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
+                        </div>
+                        <div class="flex flex-grow">
+                            <input type="text" name="comment" id="comment" class="w-full border-slate-500 rounded-2xl" placeholder="Add a comment">
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="search-board-bg" class="absolute hidden w-screen h-screen  top-0">
+</div>
+<div id='search-board' class="absolute hidden pt-8 rounded-lg shadow-xl bg-white z-10 overflow-hidden">
+    <input type="text" name="search-bar" id="search-bar" class="w-72 mx-3 rounded-xl py-4" placeholder="search" onkeyup="search()">
+    <div class="mt-2">
+        <ul id="search-list" class="">
+            <p class="px-4 mt-5 mb-3">save to board</p>
+            <div class="max-h-56 overflow-auto">
+
+                <% profile.boards.forEach(board => { %>
+                    <li class="w-full px-4 py-4 hover:bg-slate-300" onclick="savePin('<%= board._id %>', '<%= pin._id %>')"><%= board.title %></li>
+                <% }) %>
+            </div>
+        </ul>
+        <div id="always-displayed" class="mt-1 w-full px-4 py-4 hover:bg-slate-300">
+           <p>Create Board</p>
+        </div>
+    </div>
+</div>
+
+<%- include('./createBoardModel') %>
+
+<script src="/js/viewPin.js"></script>

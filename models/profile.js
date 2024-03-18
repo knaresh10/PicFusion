@@ -19,7 +19,7 @@ const profileSchema = new mongoose.Schema({
     },
     profilePic : {
         type : String,
-        default : "learning-bro.svg"
+        default : "Learning-bro.svg"
     },
     profileSetupCompleted : {
         type : Boolean,
@@ -32,6 +32,20 @@ const profileSchema = new mongoose.Schema({
     boards : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Board'
+    }],
+    quickSave : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Pin'
+    }],
+    savedPins : [{
+        pin : { 
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Pin'
+        },
+        board : {
+            type : mongoose.Schema.Types.ObjectId,
+            ref : 'Board'
+        },
     }],
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
