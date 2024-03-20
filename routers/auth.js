@@ -3,7 +3,7 @@ const { handleCreateNewUser, handleVerifyUser } = require("../controllers/auth")
 
 const router = Router();
 
-router.get('/', (req, res) => res.render('index'));
+router.get('/', (req, res) => res.render('landingPage'));
 
 router.get('/signup', (req, res) => {res.render('signup')});
 router.post('/signup', handleCreateNewUser);

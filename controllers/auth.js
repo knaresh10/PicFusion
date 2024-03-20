@@ -11,7 +11,6 @@ const handleCreateNewUser = async (req, res) => {
 
     const profile = await Profile.create({
         user : result._id,
-        
     })
     
     res.render('login');

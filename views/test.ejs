@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File upload</title>
+</head>
+<body>
+    <form id="fileUpload" action="/test/upload" method="post" enctype="multipart/form-data">
+        <label for="fName">File Name</label>
+        <input type="text" name="fName" id="fName">
+        <label for="file">Upload File</label>
+        <input type="file" name="file">
+        <button type="submit">Upload</button>
+    </form>
+    <div>
+        <h1>File</h1>
+        <table id="myTable">
+            <thead>
+                <tr>
+                    <th>File Name</th>
+                    <th>Delete File</th>
+                </tr>
+            </thead>
+            <tbody></tbody>
+            <tfoot></tfoot>
+        </table>
+    </div>
+</body>
+
+<script>
+
+    let tableBody;
+    const listFiles = () => {
+        fetch('/test/listFiles', {
+            method : 'GET', 
+        })
+        .then(resp => resp.json())
+        .then(resp => {
+            // console.log(resp);
+
+            if(resp) {
+                tableBody.innerHTML =  resp.map(f => `
+                <tr>
+                    <td>${f.Key}</td>
+                    <td><a href="${f.url}">View</a></td>
+                    <td><button onclick="deleteFile('${f.Key}')">Delete</button></td>
+                </tr>
+            `).join('')
+            }
+        })
+        .catch(err => {
+            alert('error');
+        })
+    }
+
+    const deleteFile = (key) => {
+        fetch(`/test/deleteFile/${key}`, {
+            method : 'DELETE',
+        })
+        .then(resp => resp.json())
+        .then(resp => {
+            window.location.href = resp.redirectURL;
+        })
+        .catch(err => {
+            alert('error')
+        }) 
+    }
+
+
+    const init = () => {
+        listFiles();
+        tableBody = document.querySelector('#myTable tbody');
+    }
+
+    window.onload = init;
+</script>
+
+</html>

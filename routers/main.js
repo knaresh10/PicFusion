@@ -4,7 +4,7 @@ const { handleFeedDisplay } = require('../controllers/main');
 const router = Router();
 
 router.get('/', (req, res) => {
-    res.render('index', {
+    res.render('landingPage', {
         user : req.user,
     });
 });

@@ -11,6 +11,7 @@ const authRouter = require('./routers/auth');
 const profileRouter = require('./routers/profile');
 const pinRouter = require('./routers/pin');
 const boardRouter = require('./routers/board');
+const testRouter = require('./routers/test');
 const {checkForAuthentication} = require('./middleware/auth');
 
 const app = express();
@@ -26,12 +27,18 @@ app.use(cookieParser());
 // middlewares
 app.use(checkForAuthentication('token'));
 
+
+
+// testing
+app.use('/test', testRouter);
+
 // routers
 app.use('/', mainRouter);
 app.use('/auth', authRouter);
 app.use('/profile', profileRouter);
 app.use('/pin', pinRouter);
 app.use('/board', boardRouter);
+
 // connections
 mongoose.connect(URL)
 .then(() => {
