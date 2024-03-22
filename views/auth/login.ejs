@@ -11,7 +11,7 @@
     <div class="mx-auto max-w-lg">
       <h1 class="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">Get started today</h1>
         
-      <form action="/auth/login" method="post" class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+      <form id="login-form" class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
         <p class="text-center text-lg font-medium">Log in to your account</p>
   
         <div>
@@ -42,6 +42,8 @@
               </svg>
             </span>
           </div>
+
+          <p id="email-error" class="text-sm px-2 mt-2 text-red-400"></p>
         </div>
   
         <div>
@@ -78,7 +80,14 @@
               </svg>
             </span>
           </div>
+
+
+          <p id="password-error" class="text-sm px-2 mt-2 text-red-400"></p>
+
+          <a href="/auth/forgot-password" class="text-sm px-2 py-2 text-indigo-500 hover:text-indigo-600">Forgot password??</a>
+
         </div>
+
   
         <button
           type="submit"
@@ -94,5 +103,7 @@
       </form>
     </div>
   </div>
+
+  <script src="/js/auth/login.js"></script>
 </body>
 </html>

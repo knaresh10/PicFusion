@@ -27,25 +27,25 @@ const userSchema = new mongoose.Schema({
     }
 });
 
-userSchema.pre('save', async function(next) {
-    const salt = await bcrypt.genSalt();
-    this.password = await bcrypt.hash(this.password, salt)
-    next();
-});
+// userSchema.pre('save', async function(next) {
+//     const salt = await bcrypt.genSalt();
+//     this.password = await bcrypt.hash(this.password, salt)
+//     next();
+// });
 
 
-userSchema.static('matchPasswordAndGenerateToken', async function (email, password) {
-    const user = await this.findOne({email});
+// userSchema.static('matchPasswordAndGenerateToken', async function (email, password) {
+//     const user = await this.findOne({email});
 
-    if(!user) throw new Error('user not found');
+//     if(!user) throw new Error('user not found');
 
-    const result = await bcrypt.compare(password, user.password);
+//     const result = await bcrypt.compare(password, user.password);
 
-    if(!result) throw new Error('password not matched');
+//     if(!result) throw new Error('password not matched');
     
-    // generate a token
-    return createTokenForUser(user);
-})
+//     // generate a token
+//     return createTokenForUser(user);
+// })
 
 const User = mongoose.model("User", userSchema);
 

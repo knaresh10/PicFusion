@@ -11,11 +11,11 @@
 		<!-- if user has logged in then only show the menu(home, explore, create) -->
 		<% if (locals.user) { %>
 			<div class="w-full flex flex-row px-10 gap-6 items-center">
-				<a href="#" class="px-3 py-3 rounded-3xl bg-slate-100 hover:bg-slate-200">Home</a>
-				<a href="#" class="px-3 py-3 rounded-3xl bg-blue-500 hover:bg-blue-600">Create</a>
+				<a href="/feed" class="px-3 py-3 rounded-3xl bg-slate-100 hover:bg-slate-200">Home</a>
+				<a href="/pin/create" class="px-3 py-3 rounded-3xl bg-blue-500 hover:bg-blue-600">Create</a>
 				<div class="flex items-center gap-2 flex-grow relative">
-					<span class="material-symbols-outlined absolute ml-3 ">search</span>
-					<input type="text" name="" id="" class="w-full rounded-full bg-slate-100 p-3 pl-10 text-muted" placeholder="Search">
+					<span class="material-symbols-outlined absolute ml-3">search</span>
+					<input type="text" name="" id="" class="w-full rounded-full bg-slate-100 p-3 pl-10 text-muted outline-none border-none hover:bg-slate-200" placeholder="Search">
 				</div>
 			</div>
 			<!-- <ul class="hidden absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2 lg:flex lg:mx-auto  lg:items-center lg:w-auto lg:space-x-6">

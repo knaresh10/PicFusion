@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/output.css">
+    <title>Document</title>
+</head>
+<body>
+
+<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+    <div class="mx-auto max-w-lg">
+      <h1 class="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">Get started today</h1>
+
+      <form id="signup-form" class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
+        <p class="text-center text-lg font-medium">Sign up for a new account</p>
+  
+        <!-- for username input tag -->
+        <div>
+            <label for="username" class="sr-only">Username</label>
+    
+            <div class="relative">
+              <input
+                id="username-input"
+                type="text"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                placeholder="Enter User Name"
+                name="username"
+              />
+            </div>
+            <p id="username-error" class="text-sm px-2 mt-2 text-red-400"></p>
+          </div>
+
+        <!-- for email input tag -->
+        <div>
+          <label for="email" class="sr-only">Email</label>
+  
+          <div class="relative">
+            <input
+              id="em-input"
+              type="email"
+              class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              placeholder="Enter email"
+              name="email"
+            />
+
+            <p id="email-error" class="text-sm px-2 mt-2 text-red-400"></p>
+          </div>
+        </div>
+  
+        <!-- for password input tag -->
+        <div>
+          <label for="password" class="sr-only">Password</label>
+  
+          <div class="relative">
+            <input
+              id="pwd-input"
+              type="password"
+              class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              placeholder="Enter password"
+              name="password"
+            />
+  
+            <span id="show-password" class="absolute inset-y-0 end-0 grid place-content-center px-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-4 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                />
+              </svg>
+            </span>
+          </div>
+          <p id="password-error" class="text-sm px-2 mt-2 text-red-400"></p>
+        </div>
+
+        <!-- for confirm password input tag -->
+        <div>
+          <label for="confirmPassword" class="sr-only">Password</label>
+  
+          <div class="relative">
+            <input
+              id="confirm-pwd-input"
+              type="password"
+              class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              placeholder="Confirm password"
+              name="confirmPassword"
+            />
+
+            <span id="show-confirm-password" class="absolute inset-y-0 end-0 grid place-content-center px-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-4 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                />
+              </svg>
+            </span>
+          </div>
+          <p id="confirm-password-error" class="text-sm px-2 mt-2 text-red-400"></p>
+        </div>
+
+        <!-- for otp -->
+        <div id="div-otp" class="hidden">
+          <label for="otp" class="sr-only">OTP</label>
+  
+          <div class="relative">
+            <input
+              id="otp-input"
+              type="password"
+              class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+              placeholder="Enter otp"
+              name="otp"
+            />
+  
+            <span id="show-otp" class="absolute inset-y-0 end-0 grid place-content-center px-4">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                class="size-4 text-gray-400"
+                fill="none"
+                viewBox="0 0 24 24"
+                stroke="currentColor"
+              >
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M15 12a3 3 0 11-6 0 3 3 0 016 0z"
+                />
+                <path
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                  stroke-width="2"
+                  d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z"
+                />
+              </svg>
+            </span>
+          </div>
+          <p id="otp-error" class="text-sm px-2 mt-2 text-red-400"></p>
+        </div>
+  
+        <button
+          type="submit"
+          class="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white select-none"
+        >
+          send OTP
+        </button>
+  
+        <p class="text-center text-sm text-gray-500">
+            have an account?
+          <a class="underline" href="/auth/login">Log in</a>
+        </p>
+      </form>
+    </div>
+  </div>
+
+  <script src="/js/auth/signup.js"></script>
+</body>
+</html>

@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const path = require('path');
 const session = require('express-session');
 const cookieParser = require('cookie-parser');
+const bodyParser = require('body-parser');
 
 require('dotenv').config();
 
@@ -23,10 +24,16 @@ app.set("view engine", "ejs");
 app.use(express.urlencoded({extended : true}));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
+app.use(express.json())
+app.use(bodyParser.json());
 
 // middlewares
 app.use(checkForAuthentication('token'));
-
+app.use(session({
+    secret : process.env.SESSION_SECRET_KEY,
+    resave : false,
+    saveUninitialized : true
+}))
 
 
 // testing
