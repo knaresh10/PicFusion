@@ -1,4 +1,7 @@
 const loginForm = document.getElementById('login-form');
+const emInput = document.getElementById('em-input')
+const passwordInput = document.getElementById('pwd-input');
+const showPassword = document.getElementById('show-password')
 
 function displayErrorMessage(id, message) {
     const errorElement = document.getElementById(id);
@@ -39,6 +42,9 @@ loginForm.addEventListener("submit", async (e) => {
         }
 
         loginForm.reset();
+
+        sessionStorage.setItem('username' , responseData.username);
+
         alert(responseData.message);
            
         window.location.href = responseData.redirectURL
@@ -47,4 +53,19 @@ loginForm.addEventListener("submit", async (e) => {
     catch (error) {
         console.log(error);
     }
+})
+
+// show password
+showPassword.addEventListener('click', () => {
+    passwordInput.type = passwordInput.type === 'text' ? 'password' : 'text';
+})
+
+// hide display error message
+
+emInput.addEventListener('input', (e) => {
+    displayErrorMessage('email-error', '');
+})
+
+passwordInput.addEventListener('input', (e) => {
+    displayErrorMessage('password-error', '');
 })

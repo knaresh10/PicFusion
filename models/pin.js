@@ -1,8 +1,6 @@
 const mongoose = require('mongoose');
-const User = require('./user');
-const Board = require('./board');
 
-const postSchema = new mongoose.Schema({
+const pinSchema = new mongoose.Schema({
     title : {
         type : String,
     },
@@ -10,20 +8,36 @@ const postSchema = new mongoose.Schema({
         type : String,
     },
     image : {
-        type : String
+        type : String,
     },
     author : {
         type : mongoose.Schema.ObjectId,
-        ref : 'User'
+        ref : 'Profile'
     },
     board : {
         type : mongoose.Schema.ObjectId,
         ref : 'Board'
     },
+    tags : [{
+        type : String,
+    }],
+    comments : [{
+        profileId : {
+            type : mongoose.Schema.ObjectId,
+            ref : 'Profile',
+        },
+        message : {
+            type : String,
+        }
+    }],
+    likes : {
+        type : Number,
+        default : 0
+    },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
 });
 
-const Pin = mongoose.model('Pin', postSchema);
+const Pin = mongoose.model('Pin', pinSchema);
 
 module.exports = Pin;

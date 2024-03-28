@@ -1,12 +1,14 @@
 const mongoose = require('mongoose');
-const Pin = require('./pin');
-const User = require('./user');
-const Board = require('./board');
 
 const profileSchema = new mongoose.Schema({
     user : {
         type : mongoose.Schema.Types.ObjectId,
         ref : 'User'
+    },
+    username : {
+        type : String,
+        required : true,
+        unique: true,
     },
     fullname : {
         type : String,
@@ -34,6 +36,10 @@ const profileSchema = new mongoose.Schema({
         ref : 'Board'
     }],
     quickSave : [{
+        type : mongoose.Schema.Types.ObjectId,
+        ref : 'Pin'
+    }],
+    likedPins : [{
         type : mongoose.Schema.Types.ObjectId,
         ref : 'Pin'
     }],

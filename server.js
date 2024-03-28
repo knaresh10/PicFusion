@@ -29,6 +29,7 @@ app.use(bodyParser.json());
 
 // middlewares
 app.use(checkForAuthentication('token'));
+app.use(checkForAuthentication('profile'));
 app.use(session({
     secret : process.env.SESSION_SECRET_KEY,
     resave : false,

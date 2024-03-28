@@ -21,7 +21,9 @@ const sendMailToUser = async (to, html) => {
     }
 
 
-    await transporter.sendMail(options, (err, info) => {console.log(info)})
+    transporter.sendMail(options, (err, info) => {
+        // console.log(info);
+    })
 }
 
 module.exports = {

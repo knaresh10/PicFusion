@@ -1,10 +1,25 @@
 const form = document.getElementById('signup-form');
 const divOTP = document.getElementById('div-otp');
 const formBtn = document.querySelector('form button')
+const usernameInput = document.getElementById("username-input");
+const emailInput = document.getElementById("em-input");
+const pwdInput = document.getElementById('pwd-input');
+const showPwd = document.getElementById('show-password');
+const confirmPwdInput = document.getElementById('confirm-pwd-input');
+const showConfirmPwd = document.getElementById('show-confirm-password');
+const otpInput = document.getElementById('otp-input');
+const showOtp = document.getElementById('show-otp');
+
 
 function displayErrorMessage(id, message) {
     const errorElement = document.getElementById(id);
     errorElement.textContent = message;
+}
+
+
+const displayOutputMessage = (divId, message) => {
+    document.getElementById(divId).classList.toggle('hidden');
+    // document.getElementById(msgId).textContent = message;
 }
 
 
@@ -36,13 +51,23 @@ const sendOTP = async (userData) => {
             return ;
         } 
 
+        usernameInput.readOnly = true;
+        emailInput.readOnly = true;
+        pwdInput.readOnly = true;
+        confirmPwdInput.readOnly = true;
+        
+        
+        setTimeout(() => {
+            displayOutputMessage('output-div');
+        }, 1000);
+        displayOutputMessage('output-div');
+
+        console.log(responseData);
 
         divOTP.classList.remove('hidden');
 
         formBtn.innerText = 'verify OTP'
-
-        alert(responseData.message);
-
+        
         return ;
 
     }  
@@ -111,25 +136,44 @@ form.addEventListener('submit', async (e) => {
 
 })
 
+// update error messages 
+// username
+
+
+usernameInput.addEventListener('input', (e) => {
+    displayErrorMessage('username-error', '');
+})
+
+// email
+
+
+emailInput.addEventListener('input', (e) => {
+    displayErrorMessage('email-error', "");
+})
+
 
 // show password
-const pwdInput = document.getElementById('pwd-input');
-const showPwd = document.getElementById('show-password');
+
 
 showPwd.addEventListener('click', () => {
     pwdInput.type = pwdInput.type == 'text' ? 'password' : 'text';
 })
 
 // show confirm password
-const confirmPwdInput = document.getElementById('confirm-pwd-input');
-const showConfirmPwd = document.getElementById('show-confirm-password');
+
 
 showConfirmPwd.addEventListener('click', () => {
     confirmPwdInput.type = confirmPwdInput.type == 'text' ? 'password' : 'text';
 })
 
-// password minimum length
+// show otp
 
+
+showOtp.addEventListener('click', () => {
+    otpInput.type = otpInput.type == 'text' ? 'password' : 'text';
+})
+
+// password minimum length
 const updatePasswordRequirement = (pwd) => {
     if(pwd.length > 0 && pwd.length < 8) {
         document.getElementById('password-error').innerText = "password should be minimum 8 letters"
@@ -144,7 +188,6 @@ pwdInput.addEventListener('input', (e) => {
 })
 
 // match confirm password with password
-
 const matchPassword = (pwd, confirmPwd) => {
     if(pwd !== confirmPwd) {
         document.getElementById('confirm-password-error').innerText = "password doesn't match"

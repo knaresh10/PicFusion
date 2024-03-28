@@ -2,7 +2,7 @@
     <!-- board -->
     <div class="bg-white rounded-lg px-4 py-8">
         <h2 class="w-full text-2xl font-bold text-center">Create board</h2>
-        <form action="/board/create/save/<%= pin._id %>" method="post" class="mt-4">
+        <form id="create-board-save-pin" action="/board/create/save/<%= pin._id %>" method="post" class="mt-4">
             <div class="flex flex-row ">
                 <!-- image section -->
                 <div class="p-4">
@@ -13,11 +13,12 @@
                 <!-- input fields section -->
                 <div class="w-2/3 flex flex-col p-4">
                         <label class="mb-1" for="name">Board Name</label>
-                        <input class="py-3 rounded-lg" type="text" name="name">
+                        <input class="py-3 rounded-lg" type="text" name="name" id="name">
+                        <p id="board-error" class="text-sm px-2 mt-2 text-red-400"></p>
             
                         <!-- toggle for secret -->
                         <label class="inline-flex items-center mb-5 cursor-pointer mt-5">
-                            <input type="checkbox" name="secret" value="yes" class="sr-only peer">
+                            <input type="checkbox" name="secret" value="yes" class="sr-only peer" id="secret">
                             <div class="relative w-9 h-5 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
                             <span class="ms-3 text-sm font-medium text-gray-900 dark:text-gray-300">Secret</span>
                         </label>

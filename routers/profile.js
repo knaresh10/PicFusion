@@ -1,7 +1,6 @@
 const {Router} = require('express');
 const upload = require('../middleware/multer');
-const { handleProfileEdit } = require('../controllers/auth');
-const { handleProfile } = require('../controllers/profile');
+const { handleProfile, handleProfileEdit } = require('../controllers/profile');
 const Profile = require('../models/profile');
 const router = Router();
 
@@ -9,8 +8,9 @@ router.get('/', handleProfile);
 
 router.get('/:username');
 router.get('/edit', async (req, res) => {
-    const profile = await Profile.findOne({user : req.user._id});
+    const profile = await Profile.findOne({user : req.user.id});
     return res.render('profileSetup', {
+        title : !profile.profileSetupCompleted ? 'create' : 'edit',
         user : req.user,
         profile
     })
@@ -19,7 +19,8 @@ router.get('/edit', async (req, res) => {
 router.post('/edit', upload.single('profile-pic'), handleProfileEdit);
 
 router.get('/quickSave', async (req, res) => {
-    const profile = await Profile.findOne({user : req.user._id}).populate('quickSave');
+    const profile = await Profile.findOne({user : req.user.id}).populate('quickSave');
+    console.log(profile);
     return res.render('quickSave', {user : req.user, profile});
 })
 

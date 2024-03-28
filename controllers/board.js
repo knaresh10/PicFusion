@@ -4,9 +4,10 @@ const Profile = require("../models/profile");
 const handleViewBoard = async (req, res) => {
     const boardId = req.params.boardId;
     const board = await Board.findById(boardId).populate('pins');
-    const profile = await Profile.findOne({user : req.user._id});
-    res.render('viewBoard', {board, user : req.user._id, profile});
+    const profile = await Profile.findById(req.profile.id);
+    res.render('viewBoard', {board, user : req.user.id, profile});
 }
+
 
 const handleSavePinToBoard = async (req, res) => {
     const boardId = req.params.boardId;
@@ -20,7 +21,7 @@ const handleSavePinToBoard = async (req, res) => {
 
     // save pin to user savedPin
 
-    const profile = await Profile.findOne({user : req.user._id});
+    const profile = await Profile.findById(req.profile.id);
     profile.savedPins.push({
         pin : pinId,
         board : boardId
@@ -28,7 +29,7 @@ const handleSavePinToBoard = async (req, res) => {
 
     await profile.save();
 
-    return res.json({ redirectURL : `/pin/${pinId}`});
+    return res.json({pinSavedAt : board.title});
 
 }
 
@@ -39,27 +40,34 @@ const handleCreateBoard = async (req, res) => {
     const board = await Board.create({
         title : name, 
         private : (secret === 'yes' ? true : false),
-        author : req.user._id,
+        author : req.profile.id,
     })
 
-    const profile = await Profile.findOne({user : req.user._id});
-    console.log(profile);
+    const profile = await Profile.findById(req.profile.id);
+
     profile.boards.push(board._id);
     
     await profile.save();
 
-    console.log(board);
-    return res.redirect('/profile');
+    return res.json({pinSavedAt : board.title});
+
+    // return res.redirect('/profile');
 }
 
 const handleCreateBoardSavePin = async (req, res) => {
+    console.log(req.body);
     const {name, secret} = req.body;
     const pinId = req.params.pinId;
+    console.log(name, req.profile.id);
+    const isBoardCreated = await Board.findOne({title : name, author : req.profile.id});
+    if(isBoardCreated) {
+        return res.json({message : 'board is already present'});
+    }
     // create a new board
     const board = await Board.create({
         title : name,
         private : (secret === 'yes' ? true : false),
-        author : req.user._id,
+        author : req.profile.id,
     })
     board.pins.push(pinId);
     await board.save();
@@ -67,7 +75,7 @@ const handleCreateBoardSavePin = async (req, res) => {
 
     // add the created board into the profile and also add saved pin 
 
-    const profile = await Profile.findOne({user : req.user._id});
+    const profile = await Profile.findById(req.profile.id);
     profile.boards.push(board._id);
     profile.savedPins.push({
         pin : pinId, 
@@ -77,7 +85,8 @@ const handleCreateBoardSavePin = async (req, res) => {
     await profile.save();
 
 
-    return res.redirect(`/pin/${pinId}`);
+    return res.json({pinSavedAt : board.title, boardId : board._id, pinId});
+    // return res.redirect(`/pin/${pinId}`);
 }
 
 module.exports = {

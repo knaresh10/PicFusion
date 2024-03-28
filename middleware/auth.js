@@ -10,7 +10,8 @@ function checkForAuthentication(cookieName) {
 
         try {
             const userPayLoad = verifyToken(tokenCookieValue);
-            req.user = userPayLoad;
+            if(cookieName == 'token') req.user = userPayLoad;
+            else req.profile = userPayLoad;
         } catch(error) {
 
         }

@@ -1,3 +1,4 @@
+
 <div class="py-8 w-full flex items-center justify-center">
     <div class="rounded-3xl w-[50%] overflow-hidden flex gap-4 shadow-lg">
         <div class="w-1/2 overflow-hidden ">
@@ -10,37 +11,21 @@
                     <span class="material-symbols-outlined">
                         ios_share
                     </span>
-                    <span class="material-symbols-outlined">
-                        more_horiz
-                        </span>
                 </div>
-                <div class="flex flex-row items-center gap-2">
-                <% var isPinSaved = false; %>
-                <% var savedBoardName = ''; %>
-                <% let savedBoardId = ''; %>
+                <!-- show this when pin is saved -->
+                <div id="saved-div" class="hidden flex flex-row items-center gap-2">
+                    <p id="saved-title"></p>
+                    <button id="unsave-btn" class="border-none bg-slate-500 px-4 py-3 rounded-2xl text-white">Saved</button>
+                </div>
 
-                <% profile.savedPins.forEach(function(savedPin) { %>
-                    <% if (savedPin.pin.equals(pin._id)) { %>
-                        <% isPinSaved = true; %>
-                        <% savedBoardName = savedPin.board.title; %>
-                        <% savedBoardId = savedPin.board._id; %>
-                    <% } %>
-                <% }); %>
-
-                <% if (isPinSaved) { %>
-                    <p><%= savedBoardName %></p>
-                    <a href="/pin/unsave/<%= pin._id%>/<%= savedBoardId %>" class="border-none bg-slate-500 px-4 py-3 rounded-2xl text-white">Saved</a>
-                <% } else { %>
-                    <!-- <p>This pin is not saved.</p> -->
-                    <div class="">
+                <!-- show this when pin in not saved -->
+                <div id="unsaved-div" class="flex flex-row items-center gap-2">
+                    <div id="" class="">
                         <button id="board-search" class="flex flex-row justify-center">Profile <span class="material-symbols-outlined">
                             expand_more
                         </span></button>
-                        
                     </div>
-                    <a href="/pin/save/<%= pin._id %>" class="border-none bg-red-600 px-4 py-3 rounded-2xl text-white">save</a>
-                <% } %>
-
+                    <button id="save-btn" class="border-none bg-red-600 px-4 py-3 rounded-2xl text-white">save</button>
                 </div>
             </div>
 
@@ -50,13 +35,10 @@
                 <div class="w-full mb-4">
                     <%- include('./profileStat') %>
                 </div>
-                <!-- <p class="whitespace-nowrap overflow-hidden text-ellipsis w-full max-h-28">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Distinctio ex consectetur, veritatis aliquam corporis expedita perspiciatis aliquid ducimus reprehenderit.. </p> -->
             </div>
 
             <!-- comment section -->
-            <div class="flex flex-grow ">
-                <%- include('./comments') %>
-            </div>
+            <%- include('./comments') %>
 
             <!-- add comment --> 
             <div class="px-7 py-4 w-full">
@@ -66,14 +48,14 @@
                         <div class="flex flex-row gap-3">
                             <!-- likes with count -->
                             <div class="flex flex-row gap-1">
-                                <span class="material-symbols-outlined ">
-                                    favorite
+                                <span id="like-button">
+                                    <i class="fa-regular fa-heart"></i>
                                 </span>
-                                <p>20</p>
+                                <span id="unlike-button" class="hidden">
+                                    <i class="fa-solid fa-heart" style="color: #e2031a;"></i>
+                                </span>
+                                <p id="likeCount"></p>
                             </div>
-                            <span class="material-symbols-outlined">
-                                heart_plus
-                            </span>
                         </div>
                     </div>
                     <div class="flex flex-row w-full gap-3">
@@ -96,9 +78,7 @@
     <input type="text" name="search-bar" id="search-bar" class="w-72 mx-3 rounded-xl py-4" placeholder="search" onkeyup="search()">
     <div class="mt-2">
         <ul id="search-list" class="">
-            <p class="px-4 mt-5 mb-3">save to board</p>
             <div class="max-h-56 overflow-auto">
-
                 <% profile.boards.forEach(board => { %>
                     <li class="w-full px-4 py-4 hover:bg-slate-300" onclick="savePin('<%= board._id %>', '<%= pin._id %>')"><%= board.title %></li>
                 <% }) %>
@@ -112,4 +92,7 @@
 
 <%- include('./createBoardModel') %>
 
+<script>
+    const pinId = '<%- pin._id %>'
+</script>
 <script src="/js/viewPin.js"></script>

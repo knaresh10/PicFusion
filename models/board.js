@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const User = require('./user');
-const Pin = require('./pin')
 
 const boardSchema = new mongoose.Schema({
     title : {
@@ -12,7 +10,7 @@ const boardSchema = new mongoose.Schema({
     },
     author : {
         type : mongoose.Schema.ObjectId,
-        ref : 'User'
+        ref : 'Profile'
     },
     pins : [{
         type : mongoose.Schema.ObjectId,

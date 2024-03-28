@@ -5,11 +5,16 @@ const router = Router();
 
 router.get('/', (req, res) => res.render('landingPage'));
 
-router.get('/signup', (req, res) => {res.render('auth/signup')});
+// sign up routes
+router.get('/signup', (req, res) => {
+    res.clearCookie('token').render('auth/signup')});
 router.post('/send-otp', handleSendOTP);
 router.post('/verify-otp', handleVerifyOTPandCreateUser);
 
-router.get('/login', (req, res) => res.render('auth/login'));
+router.get('/login', (req, res) => {
+    res.clearCookie('token').render('auth/login')
+});
+
 router.post('/login', handleVerifyUser);
 router.get('/forgot-password', (req, res) => res.render('auth/forgot-password'))
 router.post('/forgot-password-send-otp', handleForgotPasswordSendOTP);

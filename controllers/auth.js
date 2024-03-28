@@ -2,6 +2,7 @@ const otpGenerator = require('otp-generator')
 
 const User = require('../models/user');
 const Profile = require('../models/profile');
+const Board = require('../models/board');
 const OTP = require('../models/otp');
 const bcrypt = require('bcrypt');
 const {createTokenForUser} = require('../services/authentication');
@@ -35,7 +36,7 @@ const handleSendOTP = async (req, res) => {
                     `
         await sendMailToUser(email, html);
 
-        return res.status(200).json({message : 'otp has been sent to mail'});
+        return res.status(200).json({message : "otp has be sent to mail"});
     } catch(error) {
         console.log('error registering user', error);
         res.status(500).json({message : 'Internal error'})
@@ -59,13 +60,14 @@ const handleVerifyOTPandCreateUser = async (req, res) => {
         password = await bcrypt.hash(password, salt)
 
         const result = await User.create({
-            username,
             email,
             password,
         });
-    
+
+        
         const profile = await Profile.create({
             user : result._id,
+            username,
         })
 
         return res.status(201).json({message : 'User registered successfully', redirectURL : '/auth/login'});
@@ -78,7 +80,6 @@ const handleVerifyOTPandCreateUser = async (req, res) => {
 const handleVerifyUser = async (req, res) => {
     const {email, password} = req.body;
     try {
-
         const user = await User.findOne({email});
         if(!user) {
             return res.status(400).json({message : 'Email not found'})
@@ -89,12 +90,14 @@ const handleVerifyUser = async (req, res) => {
             return res.status(400).json({message : 'Password not matched'});
         }
 
-        const token = createTokenForUser(user);
+        const profile = await Profile.findOne({user : user._id}, {username : 1, profilePic : 1, profileSetupCompleted : 1});
 
-        const profile = await Profile.findOne({user : user._id});
+        const jwt = createTokenForUser({id : user._id});
+        const profileData = createTokenForUser({id : profile._id});
+
         
-        if(!profile.profileSetupCompleted) return res.cookie('token', token).status(200).json({message : "user logged in ", redirectURL : '/profile/edit'})
-        res.cookie('token', token).status(200).json({message : "user logged in ", redirectURL : '/feed'});
+        if(!profile.profileSetupCompleted) return res.cookie('token', jwt).cookie('profile', profileData).status(200).json({message : "user logged in", username : profile.username, profilePic : profile.profilePic, redirectURL : '/profile/edit'})
+        res.cookie('token', jwt).cookie('profile', profileData).status(200).json({message : "user logged in", username : profile.username, profilePic : profile.profilePic, redirectURL : '/feed'});
 
     } catch (e) {
         console.log(e);
@@ -102,7 +105,6 @@ const handleVerifyUser = async (req, res) => {
 }
 
 const handleForgotPasswordSendOTP = async (req, res) => {
-    console.log('hello')
     const {email} = req.body;
     const user = await User.findOne({email});
     if(user === null) {
@@ -126,7 +128,6 @@ const handleForgotPasswordSendOTP = async (req, res) => {
 
         const html = `
             <div>
-                // <h1>Welcome to pinCraft</h1>
                 <p>Here is your otp for resetting password ${otp}</p>
             </div>
             `
@@ -141,8 +142,6 @@ const handleForgotPasswordSendOTP = async (req, res) => {
 const handleForgotPasswordVerifyOTP = async (req, res) => {
     const {email, otp} = req.body;
     const otpData = await OTP.findOne({email});
-
-    // console.log(otpData);
 
     req.session.email = email;
 
@@ -174,22 +173,7 @@ const handleNewPassword = async (req, res) => {
     }
 }
 
-const handleProfileEdit = async (req, res) => {
-    const {fullname, about, DOB} = req.body;
-    // const 
-    const updateFields = {
-        fullname,
-        about,
-        DOB,
-        profileSetupCompleted : true
-    }
-    if(req.file) {
-        updateFields.profilePic = req.file.filename;
-    }
-    const result = await Profile.findOneAndUpdate({user : req.user._id}, updateFields);
 
-    return res.redirect('/feed')
-}
 
 module.exports = {
     handleSendOTP,
@@ -198,5 +182,4 @@ module.exports = {
     handleForgotPasswordSendOTP,
     handleForgotPasswordVerifyOTP,
     handleNewPassword,
-    handleProfileEdit,
 }
