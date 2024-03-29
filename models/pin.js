@@ -14,10 +14,6 @@ const pinSchema = new mongoose.Schema({
         type : mongoose.Schema.ObjectId,
         ref : 'Profile'
     },
-    board : {
-        type : mongoose.Schema.ObjectId,
-        ref : 'Board'
-    },
     tags : [{
         type : String,
     }],

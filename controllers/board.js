@@ -8,7 +8,6 @@ const handleViewBoard = async (req, res) => {
     res.render('viewBoard', {board, user : req.user.id, profile});
 }
 
-
 const handleSavePinToBoard = async (req, res) => {
     const boardId = req.params.boardId;
     const pinId = req.params.pinId
@@ -35,6 +34,10 @@ const handleSavePinToBoard = async (req, res) => {
 
 const handleCreateBoard = async (req, res) => {
     const {name, secret} = req.body;
+
+    const isBoardCreatedAlready = await Board.findOne({title : name});
+
+    if(isBoardCreatedAlready) return res.json({message : 'board already created'});
 
     //  create board
     const board = await Board.create({
@@ -89,9 +92,37 @@ const handleCreateBoardSavePin = async (req, res) => {
     // return res.redirect(`/pin/${pinId}`);
 }
 
+const handleDeleteBoard = async (req, res) => {
+    const title = req.params.boardTitle;
+
+    try {
+        const board = await Board.findOne({title, author : req.profile.id});
+
+        await Profile.updateOne(
+            { _id: req.profile.id },
+            { 
+              $pull: { 
+                savedPins: { board: board._id }, 
+                boards: board._id 
+              } 
+            }
+        );
+
+        await Board.findOneAndDelete({title, author : req.profile.id});
+        return res.json({message : 'board has been deleted Successfully'});
+    }
+    catch(e) {
+
+    }
+
+
+    // return res.json({Id : board._id});
+}
+
 module.exports = {
     handleSavePinToBoard,
     handleCreateBoard,
     handleCreateBoardSavePin,
     handleViewBoard,
+    handleDeleteBoard
 }

@@ -172,7 +172,7 @@ $(document).ready(() => {
         let url;
         if(boardName === 'profile') url = `/pin/unsave/${pinId}`;
         else url = `/pin/unsave/${pinId}/${boardName}`;
-        console.log('data', boardName);
+        console.log('data', boardName, url);
         $.ajax({
             type : 'POST',
             url : url,

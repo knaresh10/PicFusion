@@ -3,7 +3,7 @@ const Pin = require('../models/pin');
 const Board = require('../models/board');
 
 const handleProfile = async (req, res) => {
-    const profile = await Profile.findOne({user : req.user.id}).populate(['pins', 'boards']);
+    const profile = await Profile.findOne({user : req.user.id}).populate(['pins', 'quickSave', 'boards']);
     if (profile && profile.boards) {
         for (let i = 0; i < profile.boards.length; i++) {
             if (profile.boards[i]) {

@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <link rel="stylesheet" href="/css/output.css">
     <title>Profile Page</title>
 </head>
@@ -18,78 +19,118 @@
             <h3 class="mt-2 text-2xl"><%= profile.fullname %></h3>
             <p class="mt-2 text-sm">@<%= profile.username %></p>
 
-            <a href="/profile/edit">
+            <div class="mt-4 flex flex-row gap-6">
+                <button id="create-btn" class="py-2 border-b-4 border-transparent hover:border-black transition duration-300 ease-in-out">Create</button>
+                <button id="save-btn" class="py-2 border-b-4 border-transparent hover:border-black transition duration-300 ease-in-out">Save</button>
+            </div>
+            <!-- <a href="/profile/edit">
                 <button class="mt-10 bg-slate-300 p-3 rounded-lg font-semibold">Edit profile</button>
-            </a>
+            </a> -->
         </div>
         <!-- <hr class=" mt-2 opacity-85 w-[100vw]"> -->
-        <!-- user boards -->
 
-        <div class="">
-            <div class="w-full flex justify-end">
-                <button class="w-10 h-10 p-3 bg-slate-400 hover:bg-slate-500 rounded-full border-2 flex justify-center items-center" id="create-plus">
-                    <span class="material-symbols-outlined">
-                        add
-                    </span>
-                </button>
+
+        <div id="save-div" class="">
+            <!-- user boards -->
+            <div class="mt-5 px-4">
+                <div class="flex flex-row items-center gap-3">
+                    <p class="text-2xl font-semibold">Boards</p>
+                    <button class="w-8 h-8 p-3 shadow hover:bg-gray-300 hover:shadow-md rounded-full border-2 flex justify-center items-center" id="create-plus">
+                        <span class="material-symbols-outlined">
+                            add
+                        </span>
+                    </button>
+                    <div class="border w-full mx-2 h-0"></div>
+                </div>
             </div>
-        </div>
-
-
-        <!-- create board modal -->
-        <div id="board-modal" class="hidden absolute w-full h-screen top-0 flex justify-center items-center bg-slate-500 bg-opacity-35">
-            <div class="bg-white rounded-lg px-4 py-8">
-                <p class="w-full text-2xl font-bold text-center">Create Board</p>
-                <form action="/board/create" method="post" class="flex flex-col">
-                    <label for="name">name</label>
-                    <input type="text" name="name" class="rounded-lg  py-3" placeholder="Enter board Name"> 
-
-                    <div class="mt-2 flex flex-row items-center gap-2">
-                        <input type="checkbox" name="secret" id="secret" value="yes" class="rounded-full">
-                        <label for="secret">Keep this Board Secret</label>
-                    </div>
-                    <div class="flex justify-between px-2 mt-5">
-                        <button id="hide-create-board-modal" class="bg-slate-300 p-3 rounded-xl hover:bg-slate-400">Cancel</button>
-                        <button class="border-none bg-red-600 px-4 py-3 rounded-2xl text-white font-semibold" type="submit">Create</button>
-                    </div>
-                </form>
+    
+    
+            <!-- create board modal -->
+            <div id="board-modal" class="hidden absolute w-full h-screen top-0 flex justify-center items-center bg-slate-500 bg-opacity-35">
+                <div class="bg-white rounded-lg px-4 py-8">
+                    <p class="w-full text-2xl font-bold text-center">Create Board</p>
+                    <form id="board-create" class="flex flex-col">
+                        <label for="name">name</label>
+                        <input type="text" name="name" id="name" class="rounded-lg  py-3" placeholder="Enter board Name"> 
+                        <p id="board-error" class="text-sm px-2 mt-2 text-red-400"></p>
+    
+                        <div class="mt-2 flex flex-row items-center gap-2">
+                            <input type="checkbox" name="secret" id="secret" value="yes" class="rounded-full">
+                            <label for="secret">Keep this Board Secret</label>
+                        </div>
+                        <div class="flex justify-between px-2 mt-5">
+                            <button id="hide-create-board-modal" class="bg-slate-300 p-3 rounded-xl hover:bg-slate-400">Cancel</button>
+                            <button class="border-none bg-red-600 px-4 py-3 rounded-2xl text-white font-semibold" type="submit">Create</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-
-        <!-- saved boards -->
-
-        <div class="w-full flex px-8 gap-6">
-            <% profile.boards.forEach(board => { %>
-                <% if (board.pins.length > 0) { %>
-                    <a href="/board/<%= board._id %>">
-                        <div class="flex flex-col items-center">
-                            <div class="rounded-lg overflow-hidden">
-                                <div class="w-36 h-36 overflow-hidden">
-                                    <img src="/images/uploads/<%= board.pins[0].image%>" alt="w-full h-full object-cover" >
+    
+            <!-- saved boards -->
+    
+            <div class="mt-5 w-full flex px-8 gap-6">
+                <% profile.boards.forEach(board => { %>
+                    <% if (board.pins.length > 0) { %>
+                        <a href="/board/<%= board._id %>">
+                            <div class="flex flex-col items-center">
+                                <div class="rounded-lg overflow-hidden">
+                                    <div class="w-36 h-36 overflow-hidden">
+                                        <img src="/images/uploads/<%= board.pins[0].image%>" alt="w-full h-full object-cover" >
+                                    </div>
                                 </div>
+                                <p><%= board.title %></p>
                             </div>
-                            <p><%= board.title %></p>
-                        </div>
-                    </a>
-                <% } %>
-            <% }) %>
+                        </a>
+                    <% } %>
+                <% }) %>
+            </div>
+    
+            <!-- saved pins -->
+    
+            <div class="mt-5 px-4">
+                <div class="flex flex-row items-center gap-2">
+                    <p class="text-2xl font-semibold whitespace-normal max-w-none">Saved Pins </p>
+                    <div class="border w-full mx-2 h-0"></div>
+                </div>
+            </div>
+    
+            <div class="w-full justify-center flex flex-wrap gap-5">
+                <div class="p-5 sm:p-8">
+                    <div class="columns-1 gap-2 sm:columns-2 sm:gap-4 md:columns-4 lg:columns-7 [&>div:not(:first-child)]:mt-4">
+                        <% profile.quickSave.forEach(pin => { %>
+                            <div class="h-auto rounded-3xl overflow-hidden">
+                                <!-- <div class="w-full h-full z-10 opacity-30"></div> -->
+                                <a href="/pin/<%= pin._id %>"><img src="/images/uploads/<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
+                            </div>
+                        <% }) %>
+                    </div>
+                </div>
+            </div>
         </div>
 
-        <!-- saved pins -->
-        <div class="w-full justify-center flex flex-wrap gap-5 my-3">
-            <div class="p-5 sm:p-8">
-                <div class="columns-1 gap-5 sm:columns-2 sm:gap-8 md:columns-4 lg:columns-5 [&>div:not(:first-child)]:mt-8">
-                    <% profile.pins.forEach(pin => { %>
-                        <div class="h-auto rounded-3xl overflow-hidden">
-                            <!-- <div class="w-full h-full z-10 opacity-30"></div> -->
-                            <a href="/pin/<%= pin._id %>"><img src="/images/uploads/<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
-                        </div>
-                    <% }) %>
+        <div id="create-div" class="hidden">
+            <div class="mt-5 px-4">
+                <div class="flex flex-row items-center gap-2">
+                    <p class="text-2xl font-semibold whitespace-normal max-w-none">Created Pins </p>
+                    <div class="border w-full mx-2 h-0"></div>
+                </div>
+            </div>
+            <div class="w-full justify-center flex flex-wrap gap-5">
+                <div class="p-5 sm:p-8">
+                    <div class="columns-1 gap-2 sm:columns-2 sm:gap-4 md:columns-4 lg:columns-7 [&>div:not(:first-child)]:mt-4">
+                        <% profile.pins.forEach(pin => { %>
+                            <div class="h-auto rounded-3xl overflow-hidden">
+                                <!-- <div class="w-full h-full z-10 opacity-30"></div> -->
+                                <a href="/pin/<%= pin._id %>"><img src="/images/uploads/<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
+                            </div>
+                        <% }) %>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
+    <script src="/js/profile.js"></script>
 
     <script>
         const createPlus = document.getElementById('create-plus');
@@ -99,10 +140,6 @@
         createPlus.addEventListener('click', (req, res) => {
             boardModal.classList.remove('hidden');
         })
-
-        // boardModal.addEventListener('click', (req, res) => {
-        //     boardModal.classList.add('hidden');
-        // })
 
         hideCreateBoardModel.addEventListener('click', () => {
             boardModal.classList.add('hidden');

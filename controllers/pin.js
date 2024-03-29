@@ -106,9 +106,7 @@ const handleUnsavePin = async (req, res) => {
         req.profile.id,
         {
             $pull : {
-                quickSave : {
-                    _id : pinId
-                }
+                quickSave : pinId,
             }
         }
     )
@@ -164,9 +162,7 @@ const handleUnLikePin = async (req, res) => {
     await pin.save();
     await Profile.findByIdAndUpdate(req.profile.id, {
         $pull : {
-            likedPins : {
-                _id : pinId
-            }
+            likedPins : pinId
         }
     })
 
