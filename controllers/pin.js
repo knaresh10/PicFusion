@@ -53,8 +53,6 @@ const handleCreatePin = async (req, res) => {
     };
     
     if(tagArray.length > 0) data['tags'] = tagArray;
-
-    console.log(data)
     
     const profile = await Profile.findById(req.profile.id);
 
@@ -85,8 +83,6 @@ const handleViewPin = async (req, res) => {
             pinSavedAt = obj.board.title;
         }
     })
-
-    // console.log(pin);
 
     return res.render('pinDashboard', {user : req.user, profile, pin, author : authorProfile, isPinSaved, pinSavedAt});
 }
@@ -187,6 +183,53 @@ const handleSaveComment = async (req, res) => {
     }
 }
 
+const handleDeletePin = async (req, res) => {
+    const pinId = req.params.pinId;
+    console.log(pinId);
+    try {
+
+        // delete the pin from all the boards in which it is present
+        const boards = await Board.find({pins : pinId});
+
+        const updateBoards = boards.map(async (board) => {
+            board.pins.pull(pinId);
+            await board.save();
+        });
+
+        await Promise.all(updateBoards);
+
+        // delete the pin from the profiles of different users
+        const profiles = await Profile.find({
+            $or : [
+                {pins : pinId},
+                {quickSave : pinId},
+                {likedPins : pinId},
+                {'savedPins.pin' : pinId}, 
+            ]
+        });
+
+        const updateProfiles = profiles.map(async (profile) => {
+            profile.pins.pull(pinId); 
+            profile.quickSave.pull(pinId); 
+            profile.likedPins.pull(pinId); 
+            profile.savedPins = profile.savedPins.filter(savedPin => savedPin.pin.toString() !== pinId); 
+            await profile.save(); 
+        });
+
+        await Promise.all(updateProfiles);
+
+
+        await Pin.findByIdAndDelete(pinId);
+
+        return res.json({message : 'pin has been successfully deleted'});
+
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({message : 'internal error'});
+    }
+}
+
 module.exports = {
     handleGetPinData,
     handleCreatePin,
@@ -197,4 +240,5 @@ module.exports = {
     handleLikePin,
     handleUnLikePin,
     handleSaveComment,
-}
+    handleDeletePin
+} 

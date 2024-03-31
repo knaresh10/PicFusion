@@ -1,5 +1,5 @@
 
-<div class="py-8 w-full flex items-center justify-center">
+<div id="pin" class="py-8 w-full flex items-center justify-center">
     <div class="rounded-3xl w-[50%] overflow-hidden flex gap-4 shadow-lg">
         <div class="w-1/2 overflow-hidden ">
             <img src="/images/uploads/<%= pin.image %>" alt="" class="w-full h-auto object-cover">
@@ -7,10 +7,15 @@
         <div class="w-1/2  py-7 flex flex-col">
             <!-- different buttons -->
             <div class="w-full px-7 flex justify-between">
-                <div class="flex flex-row gap-5 items-center">
+                <div class="flex flex-row gap-3 items-center">
                     <span class="material-symbols-outlined">
                         ios_share
                     </span>
+                    <% if (profile._id.toString() == author._id.toString()) { %>
+                        <span id="delete-pin" class="material-symbols-outlined cursor-pointer">
+                            delete
+                        </span>
+                    <% } %>
                 </div>
                 <!-- show this when pin is saved -->
                 <div id="saved-div" class="hidden flex flex-row items-center gap-2">

@@ -277,9 +277,20 @@ $(document).ready(() => {
                     $('#comment').val("");
                 }
             })
-
         }
-        
+    })
+
+    // delete the pin
+
+    $('#delete-pin').click(() => {
+        console.log('delete pin has been clicked');
+        $.ajax({
+            method : 'DELETE',
+            url : `/pin/${pinId}/delete`,
+            success : (data) => {
+                window.location.href = '/feed'
+            }
+        })
     })
 })
 

@@ -1,5 +1,6 @@
 const { Router } = require('express');
 const { handleFeedDisplay } = require('../controllers/main');
+const upload = require('../middleware/multer');
 
 const router = Router();
 

@@ -1,6 +1,6 @@
 const { Router } = require('express');
 const upload = require('../middleware/multer');
-const { handleCreatePin, handleViewPin, handleSavePin, handleUnsavePin, handleLikePin, handleUnsavePinToBoard, handleGetPinData, handleUnLikePin, handleSaveComment } = require('../controllers/pin');
+const { handleCreatePin, handleViewPin, handleSavePin, handleUnsavePin, handleLikePin, handleUnsavePinToBoard, handleGetPinData, handleUnLikePin, handleSaveComment, handleDeletePin } = require('../controllers/pin');
 const Profile = require('../models/profile');
 
 const router = Router();
@@ -21,6 +21,6 @@ router.post('/unsave/:pinId', handleUnsavePin);
 router.post('/unsave/:pinId/:boardName', handleUnsavePinToBoard);
 router.post('/:pinId/comment', handleSaveComment)
 router.get('/:pinId/edit');
-router.get('/:pinId/delete');
+router.delete('/:pinId/delete', handleDeletePin);
 
 module.exports = router;
