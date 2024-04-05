@@ -1,0 +1,32 @@
+<div class="flex items-center gap-2 flex-grow relative">
+    <span class="material-symbols-outlined absolute ml-3">search</span>
+    <input type="text" name="" id="search" class="w-full rounded-full bg-slate-100 p-3 pl-10 text-muted outline-none border-none hover:bg-slate-200" placeholder="Search">
+
+    <div id="search-dropdown" class="absolute top-[55px] w-full rounded-lg shadow z-10">
+    </div>
+</div>
+
+<script>
+	$('#search').on('input', function(){
+		let query = $(this).val();
+		if(query.length <= 0) {
+            $('#search-dropdown').html('');
+            return ;
+        }
+		$.ajax({
+			url : '/search',
+			method : 'POST',
+			data : {query},
+			success : (data) => {
+                $('#search-dropdown').html('');
+				data.profiles.forEach(profile => {
+                    $('#search-dropdown').append(`<a href='/profile/view/${profile._id}'><p class="py-4 w-full hover:bg-slate-100 px-5">${profile.username}</p></a>`)
+                });
+			}
+		})
+	})
+
+    // $('#search-dropdown').on('click', 'p', function() {
+    //     console.log($(this).text());
+    // })
+</script>

@@ -3,6 +3,8 @@ const Pin = require('../models/pin');
 const Profile = require('../models/profile');
 const Board = require('../models/board');
 const { default: mongoose, mongo } = require('mongoose');
+const streamFile = require('../services/stream');
+const s3Upload = require('../services/s3Upload');
 
 
 const handleGetPinData = async (req, res) => {
@@ -32,10 +34,12 @@ const handleGetPinData = async (req, res) => {
     return res.json({isPinSaved, pinSavedAt, isLiked, likeCount : pin.likes});
 }
 
+const handleGetCreatePin = async (req, res) => {
+    const profile = await Profile.findOne({user : req.user.id});
+    return res.render('create', {user : req.user, profile})
+}
+
 const handleCreatePin = async (req, res) => {
-    if (req.fileValidationError) {
-        return res.status(400).json({ error: req.fileValidationError });
-    }
     if (!req.file) {
         return res.status(400).json({ error: 'Please upload a file' });
     }
@@ -44,6 +48,8 @@ const handleCreatePin = async (req, res) => {
     let tagArray;
     if(tags !== '') tagArray = tags.split(' ');
     
+    let stream = await streamFile.GetFileStream(req.file);
+    let message = await s3Upload.s3PinUpload(stream, req.file);
     
     let data = {
         title,
@@ -67,9 +73,10 @@ const handleCreatePin = async (req, res) => {
 
 const handleViewPin = async (req, res) => {
     const pinId = req.params.pinId;
-    const profile = await Profile.findById(req.profile.id).populate(['boards', 'savedPins.board']);
-    const pin = await Pin.findById(req.params.pinId).populate(['author', 'comments.profileId']);
-    const authorProfile = await Profile.findById(pin.author._id)
+    let profile = await Profile.findById(req.profile.id)
+    profile = await profile.populate(['boards', 'savedPins.board']);
+    let pin = await Pin.findById(req.params.pinId).populate(['author', 'comments.profileId']);
+    let authorProfile = await Profile.findById(pin.author._id)
 
     let isPinSaved = false;
     let pinSavedAt = 'profile';
@@ -93,7 +100,6 @@ const handleSavePin = async (req, res) => {
     profile.quickSave.push(pinId);
     await profile.save();
     return res.json({message : "pin is saved", pinSavedAt : 'profile'});
-    // return res.redirect(`/pin/${pinId}`);
 }
 
 const handleUnsavePin = async (req, res) => {
@@ -107,15 +113,15 @@ const handleUnsavePin = async (req, res) => {
         }
     )
     return res.json({message : 'pin is unsaved from quick'});
-    return res.redirect(`/pin/${pinId}`);
+    
 }
 
 const handleUnsavePinToBoard = async (req, res) => {
     const pinId = req.params.pinId;
     const boardName = req.params.boardName;
-    console.log(pinId, boardName);
+    // console.log(pinId, boardName);
     const boardData = await Board.findOne({title : boardName})
-    console.log(boardData); 
+    // console.log(boardData); 
     const profile = await Profile.findOneAndUpdate(
         {
             user : req.user.id
@@ -167,7 +173,6 @@ const handleUnLikePin = async (req, res) => {
 
 const handleSaveComment = async (req, res) => {
     const pinId = req.params.pinId;
-    console.log(pinId);
     const {message} = req.body;
 
     try {
@@ -179,24 +184,21 @@ const handleSaveComment = async (req, res) => {
         await pin.save();
         return res.json({message : 'comment has be added'});
     } catch (err) {
-        return res.json({err});
+        return res.json({meesage : err.message});
     }
 }
 
 const handleDeletePin = async (req, res) => {
     const pinId = req.params.pinId;
-    console.log(pinId);
     try {
 
         // delete the pin from all the boards in which it is present
         const boards = await Board.find({pins : pinId});
 
-        const updateBoards = boards.map(async (board) => {
+        boards.map(async (board) => {
             board.pins.pull(pinId);
             await board.save();
         });
-
-        await Promise.all(updateBoards);
 
         // delete the pin from the profiles of different users
         const profiles = await Profile.find({
@@ -208,7 +210,7 @@ const handleDeletePin = async (req, res) => {
             ]
         });
 
-        const updateProfiles = profiles.map(async (profile) => {
+        profiles.map(async (profile) => {
             profile.pins.pull(pinId); 
             profile.quickSave.pull(pinId); 
             profile.likedPins.pull(pinId); 
@@ -216,7 +218,7 @@ const handleDeletePin = async (req, res) => {
             await profile.save(); 
         });
 
-        await Promise.all(updateProfiles);
+        // await Promise.all(updateProfiles);
 
 
         await Pin.findByIdAndDelete(pinId);
@@ -232,6 +234,7 @@ const handleDeletePin = async (req, res) => {
 
 module.exports = {
     handleGetPinData,
+    handleGetCreatePin,
     handleCreatePin,
     handleViewPin,
     handleSavePin,

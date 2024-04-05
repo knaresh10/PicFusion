@@ -1,16 +1,10 @@
 const { Router } = require('express');
-const upload = require('../middleware/multer');
-const { handleCreatePin, handleViewPin, handleSavePin, handleUnsavePin, handleLikePin, handleUnsavePinToBoard, handleGetPinData, handleUnLikePin, handleSaveComment, handleDeletePin } = require('../controllers/pin');
-const Profile = require('../models/profile');
+const { upload } = require('../middleware/multer');
+const { handleCreatePin, handleViewPin, handleSavePin, handleUnsavePin, handleLikePin, handleUnsavePinToBoard, handleGetPinData, handleUnLikePin, handleSaveComment, handleDeletePin, handleGetCreatePin } = require('../controllers/pin');
 
 const router = Router();
 
-router.get('/create', async (req, res) => {
-        const profile = await Profile.findOne({user : req.user.id});
-        return res.render('create', {user : req.user, profile})
-    }
-);
-
+router.get('/create', handleGetCreatePin);
 router.post('/create', upload.single("image-pin"), handleCreatePin)
 router.get('/:pinId', handleViewPin);
 router.get('/pinData/:pinId', handleGetPinData);

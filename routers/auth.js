@@ -1,30 +1,19 @@
 const { Router } = require("express");
-const {handleVerifyUser, handleVerifyOTPandCreateUser, handleSendOTP, handleForgotPasswordSendOTP, handleForgotPasswordVerifyOTP, handleNewPassword } = require("../controllers/auth");
+const {handleVerifyUser, handleVerifyOTPandCreateUser, handleSendOTP, handleForgotPasswordSendOTP, handleForgotPasswordVerifyOTP, handleNewPassword, handleGetLandingPage, handleGetSignUpPage, handleGetLoginPage, handleLogout, handleGetForgotPasswordPage, handleGetNewPasswordPage } = require("../controllers/auth");
 
 const router = Router();
 
-router.get('/', (req, res) => res.render('landingPage'));
-
-// sign up routes
-router.get('/signup', (req, res) => {
-    res.clearCookie('token').render('auth/signup')});
+router.get('/', handleGetLandingPage);
+router.get('/signup', handleGetSignUpPage);
 router.post('/send-otp', handleSendOTP);
 router.post('/verify-otp', handleVerifyOTPandCreateUser);
-
-router.get('/login', (req, res) => {
-    res.clearCookie('token').render('auth/login')
-});
-
+router.get('/login', handleGetLoginPage);
 router.post('/login', handleVerifyUser);
-router.get('/forgot-password', (req, res) => res.render('auth/forgot-password'))
+router.get('/forgot-password', handleGetForgotPasswordPage)
 router.post('/forgot-password-send-otp', handleForgotPasswordSendOTP);
 router.post('/forgot-password-verify-otp', handleForgotPasswordVerifyOTP)
-
-router.get('/new-password', (req, res) =>  res.render('auth/new-password'));
+router.get('/new-password', handleGetNewPasswordPage);
 router.post('/new-password', handleNewPassword);
-
-router.get('/logout', (req, res) => {
-    res.clearCookie('token').redirect('/');
-})
+router.get('/logout', handleLogout);
 
 module.exports = router;

@@ -4,9 +4,9 @@
         <div class="w-1/2 overflow-hidden ">
             <img src="/images/uploads/<%= pin.image %>" alt="" class="w-full h-auto object-cover">
         </div>
-        <div class="w-1/2  py-7 flex flex-col">
+        <div class="w-1/2 max-h-[750px] py-7 flex flex-col">
             <!-- different buttons -->
-            <div class="w-full px-7 flex justify-between">
+            <div class="w-full px-7 flex justify-between top-0 sticky z-[2]">
                 <div class="flex flex-row gap-3 items-center">
                     <span class="material-symbols-outlined">
                         ios_share
@@ -34,19 +34,22 @@
                 </div>
             </div>
 
-            <!-- pin details -->
-            <div class="w-full px-7 mt-4">
-                <h2 class="mb-4 text-xl font-semibold"><%= pin.title %></h2>
-                <div class="w-full mb-4">
-                    <%- include('./profileStat') %>
+            <div class="flex flex-grow flex-shrink basis-auto flex-col overflow-auto">
+                <!-- pin details -->
+                <div class="w-full px-7 mt-4">
+                    <h2 class="mb-4 text-xl font-semibold"><%= pin.title %></h2>
+                    <div class="w-full mb-4">
+                        <%- include('./profileStat') %>
+                    </div>
                 </div>
+    
+                <!-- comment section -->
+                <%- include('./comments') %>
             </div>
 
-            <!-- comment section -->
-            <%- include('./comments') %>
 
             <!-- add comment --> 
-            <div class="px-7 py-4 w-full">
+            <div class="px-7 py-4 w-full sticky bottom-0 z-[1]">
                 <form action="">
                     <div class="flex justify-between py-4">
                         <h4 class="text-xl font-semibold">What do you think?</h4>

@@ -1,4 +1,4 @@
-const {Router, response} = require('express')
+const {Router} = require('express')
 const multer = require('multer');
 const path = require('path');
 const {S3Client, ListObjectsV2Command, DeleteObjectCommand, GetObjectCommand}=require('@aws-sdk/client-s3');

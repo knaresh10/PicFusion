@@ -1,8 +1,9 @@
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- component -->
-<div class="sticky w-full top-0">
+<div class="sticky w-full top-0 z-50">
 	<nav class="relative px-4 py-4 flex justify-between items-center bg-white">
-		<a class="text-3xl font-bold leading-none" href="#">
+		<a class="text-3xl font-bold leading-none" href="/feed">
 			<img class="h-11" src="/images/assets/pincraft logo.svg" alt="logo">
 		</a>
 		<!-- if user has logged in then only show the menu(home, explore, create) -->
@@ -10,10 +11,12 @@
 			<div class="w-full flex flex-row px-10 gap-6 items-center">
 				<a href="/feed" class="px-3 py-3 rounded-3xl bg-slate-100 hover:bg-slate-200">Home</a>
 				<a href="/pin/create" class="px-3 py-3 rounded-3xl bg-blue-500 hover:bg-blue-600">Create</a>
-				<div class="flex items-center gap-2 flex-grow relative">
-					<span class="material-symbols-outlined absolute ml-3">search</span>
-					<input type="text" name="" id="" class="w-full rounded-full bg-slate-100 p-3 pl-10 text-muted outline-none border-none hover:bg-slate-200" placeholder="Search">
-				</div>
+				<%- include("search") %>
+				<!-- <a href="/chat">
+					<span class="material-symbols-outlined">
+						chat
+					</span>
+				</a> -->
 			</div>
 		<% } %>
 		<!-- login and signup -->
@@ -21,7 +24,10 @@
 			<a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="/auth/login">Log In</a>
 			<a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="/auth/signup">Sign up</a>
 		<% } else { %>
+			
 			<%- include('./profile2') %>
 		<% } %>
 	</nav>
 </div>
+
+

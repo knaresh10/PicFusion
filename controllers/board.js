@@ -19,7 +19,6 @@ const handleSavePinToBoard = async (req, res) => {
     await board.save();
 
     // save pin to user savedPin
-
     const profile = await Profile.findById(req.profile.id);
     profile.savedPins.push({
         pin : pinId,
@@ -58,10 +57,8 @@ const handleCreateBoard = async (req, res) => {
 }
 
 const handleCreateBoardSavePin = async (req, res) => {
-    console.log(req.body);
     const {name, secret} = req.body;
     const pinId = req.params.pinId;
-    console.log(name, req.profile.id);
     const isBoardCreated = await Board.findOne({title : name, author : req.profile.id});
     if(isBoardCreated) {
         return res.json({message : 'board is already present'});
@@ -94,29 +91,20 @@ const handleCreateBoardSavePin = async (req, res) => {
 
 const handleDeleteBoard = async (req, res) => {
     const title = req.params.boardTitle;
+    const board = await Board.findOne({title, author : req.profile.id});
 
-    try {
-        const board = await Board.findOne({title, author : req.profile.id});
+    await Profile.updateOne(
+        { _id: req.profile.id },
+        { 
+            $pull: { 
+            savedPins: { board: board._id }, 
+            boards: board._id 
+            } 
+        }
+    );
 
-        await Profile.updateOne(
-            { _id: req.profile.id },
-            { 
-              $pull: { 
-                savedPins: { board: board._id }, 
-                boards: board._id 
-              } 
-            }
-        );
-
-        await Board.findOneAndDelete({title, author : req.profile.id});
-        return res.json({message : 'board has been deleted Successfully'});
-    }
-    catch(e) {
-
-    }
-
-
-    // return res.json({Id : board._id});
+    await Board.findOneAndDelete({title, author : req.profile.id});
+    return res.json({message : 'board has been deleted Successfully'});
 }
 
 module.exports = {
