@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
-    <title>Document</title>
+    <%- include('../partials/header')  %>
+    <title>Login Page</title>
 </head>
 <body>
 <div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
@@ -14,6 +12,9 @@
       <form id="login-form" class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
         <p class="text-center text-lg font-medium">Log in to your account</p>
   
+        <div id="output-div" class="hidden w-full rounded-lg border border-green-800 bg-green-100 p-5 pe-12 text-sm shadow-sm">
+          <p id="output-message" class="text-green-700"></p>
+        </div>
         <div>
           <label for="email" class="sr-only">Email</label>
   

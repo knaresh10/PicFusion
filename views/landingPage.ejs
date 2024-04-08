@@ -1,21 +1,38 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
+  <head>
+    <!-- for text reveal -->
+    <%- include('./partials/header') %>
+    <script src="https://unpkg.com/split-type"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
     <title>Home Page</title>
-</head>
-<body>
+  </head>
+  <body class="text-text-color overflow-hidden">
     <%- include('./partials/nav') %>
-    <div class="w-full flex flex-row" style="max-height: calc(100vh - 85px);">
-        <div class="w-1/2 flex flex-col items-start justify-center px-9">
-            <p class="text-3xl font-bold py-5">Welcome to PinCraft!</p>
-            <p class="max-w-[50%]">Discover endless inspiration and creativity from our vibrant community of creators. Whether you're looking for home decor ideas, delicious recipes, or travel inspiration, PinCraft has something for everyone.</p>
-        </div>
-        <div class="w-1/2">
-            <img src="/images/assets/Nerd-amico.svg" alt="assets1" class="w-auto h-full">
-        </div>
+    <div class="w-full flex flex-col justify-center items-center h-[100vh]">
+      <p class="mb-5 pt-5 text text-7xl font-bold font-esthetique text-center" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);">
+        Welcome to PinCraft
+      </p>
+      <p class="text text-3xl font-esthetique text-center" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0% 100%);">
+        Tomorrow's Pins, Today's Dreams.
+      </p>
     </div>
-</body>
+
+
+    <script>
+
+        let text = new SplitType('.text');
+        let characters = document.querySelectorAll('.char');
+        for(i = 0; i < characters.length; i++) {
+            characters[i].classList.add('translate-y-full');
+        }
+
+        gsap.to('.char', {
+            y : 0,
+            stagger : 0.05, 
+            delay : 0.02,
+            duration : 0.2,
+        });
+    </script>
+  </body>
 </html>

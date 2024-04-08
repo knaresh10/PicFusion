@@ -36,17 +36,18 @@ const handleSendOTP = async (req, res) => {
         const GeneratedOTP = await otpGenerator.generate(6, { upperCaseAlphabets: false, specialChars: false });
 
         req.session.userData = {username, email, password, GeneratedOTP};
-
+        const subject = 'registeration otp'
         const html = `
                     <div>
                         <h1>Welcome to pinCraft</h1>
                         <p>Here is your otp for registeration ${GeneratedOTP}</p>
                     </div>
                     `
-        await mail.sendMailToUser(email, html);
+        await mail.sendMailToUser(email, html, subject);
 
         return res.status(200).json({message : "otp has be sent to mail"});
     } catch(error) {
+        console.log(error.message);
         res.status(500).json({message : error.message})
     }
 }

@@ -1,13 +1,14 @@
 const { Router } = require('express');
 const { handleSavePinToBoard, handleCreateBoard, handleCreateBoardSavePin, handleViewBoard, handleDeleteBoard } = require('../controllers/board');
+const {checkForAuthentication} = require('../middleware/auth');
 
 const router = Router();
 
 // router.get('/create');
-router.post('/create', handleCreateBoard);
-router.delete("/:boardTitle", handleDeleteBoard);
-router.get('/:boardId', handleViewBoard);
-router.post('/create/save/:pinId', handleCreateBoardSavePin);
-router.post('/:boardId/save/:pinId', handleSavePinToBoard);
+router.post('/create', checkForAuthentication('token'), checkForAuthentication('profile') , handleCreateBoard);
+router.delete("/:boardTitle", checkForAuthentication('token'), checkForAuthentication('profile'), handleDeleteBoard);
+router.get('/:boardId', checkForAuthentication('token'), checkForAuthentication('profile'), handleViewBoard);
+router.post('/create/save/:pinId', checkForAuthentication('token'), checkForAuthentication('profile'), handleCreateBoardSavePin);
+router.post('/:boardId/save/:pinId', checkForAuthentication('token'), checkForAuthentication('profile'), handleSavePinToBoard);
 
 module.exports = router;

@@ -1,11 +1,12 @@
 const { Router } = require('express');
 const { handleFeedDisplay, handleSearchUser, handleLandingPage } = require('../controllers/main');
+const {checkForAuthentication} = require('../middleware/auth');
 const upload = require('../middleware/multer');
 
 const router = Router();
 
 router.get('/', handleLandingPage);
-router.get('/feed', handleFeedDisplay);
-router.post('/search', handleSearchUser);
+router.get('/feed', checkForAuthentication('token'), checkForAuthentication('profile'), handleFeedDisplay);
+router.post('/search', checkForAuthentication('token'), checkForAuthentication('profile'), handleSearchUser);
 
 module.exports = router;

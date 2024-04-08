@@ -6,12 +6,18 @@ module.exports = {
   ],
   theme: {
     extend: {
+      fontFamily : {
+        esthetique : ['esthetique', 'sans-serif'],
+        raleway : ['Raleway', 'sans-serif'],
+        montserrat : ['Montserrat', 'sans-serif']
+      },
       colors : {
-        'primary' : '#E60023',
-        'dark' : '#111111',
-        'light' : '#EFEFEF',
-        'lightHover' : '#d7d7d7',
-        'muted' : '#717171'
+        'primary' : '#0745d3',
+        'secondary' : '#fa712a',
+        'tertiary' : '#fab775',
+        'bg-primary' : '#fefdfe',
+        'stroke-color' : '#3dad3cf',
+        'text-color' : '#181b41',
       }
     },
   },

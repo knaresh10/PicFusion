@@ -1,15 +1,22 @@
-<div class="w-full h-full flex">
+<div class="w-full h-full flex flex-grow">
     <div class="w-full py-2 px-7">
         <h4 class="font-semibold bg-white">Comments</h4>
         <div class="">
-            <div id="conversation" class="mt-5 w-full border  py-4 ">
+            <div id="conversation" class="mt-2 w-full py-2 ">
                 <% if (pin.comments.length == 0) { %>
-                    <p id="default-comment" class="opacity-50">no comments yet. Add one to start the conversation.</p>
+                    <p id="default-comment" class="opacity-50 font-montserrat">no comments yet. Add one to start the conversation.</p>
                 <% } %>
                 <% pin.comments.forEach(comment => { %>
-                    <div class="px-2 py-1 border-opacity-40 w-full mt-1 rounded-lg ">
-                        <p class="text-sm underline"><%= comment.profileId.username %></p>
-                        <p class=""><%= comment.message %></p>
+                    <div class="py-1 border-opacity-40 flex flex-row gap-1 w-full mt-1">
+                        <div class="w-9 h-9  rounded-full overflow-hidden">
+                            <img src="/images/uploads/<%= comment.profileId.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
+                        </div>
+                        <div>
+
+                            <p class="text-sm "><span class="font-raleway font-bold">
+                                <%= comment.profileId.username %>
+                            </span><%= comment.message %></p>
+                        </div>
                     </div>
                 <% }) %>
             </div>

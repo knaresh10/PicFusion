@@ -5,7 +5,7 @@ function checkForAuthentication(cookieName) {
     return (req, res, next) => {
         const tokenCookieValue = req.cookies[cookieName];
         if(!tokenCookieValue) {
-            return next();
+            return res.redirect('/');
         }
 
         try {
@@ -13,7 +13,9 @@ function checkForAuthentication(cookieName) {
             if(cookieName == 'token') req.user = userPayLoad;
             else req.profile = userPayLoad;
         } catch(error) {
-
+            res.clearCookie('token');
+            res.clearCookie('profile');
+            return res.redirect('/');
         }
         return next();
     }

@@ -58,7 +58,7 @@ const handleCreatePin = async (req, res) => {
         author : req.profile.id
     };
     
-    if(tagArray.length > 0) data['tags'] = tagArray;
+    if(tagArray && tagArray.length > 0) data['tags'] = tagArray;
     
     const profile = await Profile.findById(req.profile.id);
 
@@ -90,7 +90,6 @@ const handleViewPin = async (req, res) => {
             pinSavedAt = obj.board.title;
         }
     })
-
     return res.render('pinDashboard', {user : req.user, profile, pin, author : authorProfile, isPinSaved, pinSavedAt});
 }
 

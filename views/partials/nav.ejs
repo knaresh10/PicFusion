@@ -1,16 +1,14 @@
-<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
 <!-- component -->
-<div class="sticky w-full top-0 z-50">
-	<nav class="relative px-4 py-4 flex justify-between items-center bg-white">
+<div class="sticky w-full top-0 z-50 border-b border-stroke-color">
+	<nav class="relative px-4 h-16 flex justify-between items-center bg-white">
 		<a class="text-3xl font-bold leading-none" href="/feed">
-			<img class="h-11" src="/images/assets/pincraft logo.svg" alt="logo">
+			<img class="h-10" src="/images/assets/pic-fusion-logo.png" alt="logo">
 		</a>
 		<!-- if user has logged in then only show the menu(home, explore, create) -->
 		<% if (locals.user) { %>
-			<div class="w-full flex flex-row px-10 gap-6 items-center">
-				<a href="/feed" class="px-3 py-3 rounded-3xl bg-slate-100 hover:bg-slate-200">Home</a>
-				<a href="/pin/create" class="px-3 py-3 rounded-3xl bg-blue-500 hover:bg-blue-600">Create</a>
+			<div class="w-full flex flex-row px-5 gap-5 items-center">
+				<a href="/feed" class="nav">Home</a>
+				<a href="/pin/create" class="nav">Create</a>
 				<%- include("search") %>
 				<!-- <a href="/chat">
 					<span class="material-symbols-outlined">
@@ -21,10 +19,12 @@
 		<% } %>
 		<!-- login and signup -->
 		<% if (!locals.user) { %>
-			<a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="/auth/login">Log In</a>
-			<a class="hidden lg:inline-block py-2 px-6 bg-blue-500 hover:bg-blue-600 text-sm text-white font-bold rounded-xl transition duration-200" href="/auth/signup">Sign up</a>
+			<div class="flex flex-row gap-5">
+				<a class="nav" href="/auth/login">Log In</a>
+				<a class="nav" href="/auth/signup">Sign up</a>
+			</div>
+			<!-- <a class="hidden lg:inline-block lg:ml-auto lg:mr-3 py-2 px-6 bg-gray-50 hover:bg-gray-100 text-sm text-gray-900 font-bold  rounded-xl transition duration-200" href="/auth/login">Log In</a> -->
 		<% } else { %>
-			
 			<%- include('./profile2') %>
 		<% } %>
 	</nav>

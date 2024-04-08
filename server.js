@@ -13,7 +13,6 @@ const profileRouter = require('./routers/profile');
 const pinRouter = require('./routers/pin');
 const boardRouter = require('./routers/board');
 const testRouter = require('./routers/test');
-const {checkForAuthentication} = require('./middleware/auth');
 
 const app = express();
 
@@ -28,8 +27,6 @@ app.use(express.json())
 app.use(bodyParser.json());
 
 // middlewares
-app.use(checkForAuthentication('token'));
-app.use(checkForAuthentication('profile'));
 app.use(session({
     secret : process.env.SESSION_SECRET_KEY,
     resave : false,
@@ -52,7 +49,8 @@ mongoose.connect(URL)
     app.listen(PORT, () => {
         console.log(`The server is running on port http://localhost:${PORT}`)
     })
-    console.log('mongodb connected')});
+    console.log('mongodb connected')
+});
 
 
 

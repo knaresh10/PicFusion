@@ -18,8 +18,9 @@ function displayErrorMessage(id, message) {
 
 
 const displayOutputMessage = (divId, message) => {
+    document.getElementById('output-message').textContent = message;
+    console.log(document.getElementById('output-message'))
     document.getElementById(divId).classList.toggle('hidden');
-    // document.getElementById(msgId).textContent = message;
 }
 
 
@@ -58,15 +59,15 @@ const sendOTP = async (userData) => {
         
         
         setTimeout(() => {
-            displayOutputMessage('output-div');
-        }, 1000);
-        displayOutputMessage('output-div');
+            displayOutputMessage('output-div', "");
+            console.log(responseData);
+    
+            divOTP.classList.remove('hidden');
+    
+            formBtn.innerText = 'verify OTP'
+        }, 1500);
+        displayOutputMessage('output-div', "OTP has been sent to the mail");
 
-        console.log(responseData);
-
-        divOTP.classList.remove('hidden');
-
-        formBtn.innerText = 'verify OTP'
         
         return ;
 
@@ -102,9 +103,13 @@ const verifyOTP = async (userData) => {
         } 
 
         form.reset();
-        alert(responseData.message);
+        // alert(responseData.message);
+        setTimeout(() => {
+            displayOutputMessage('output-div', "");
+            window.location.href = responseData.redirectURL
+        }, 1500);
+        displayOutputMessage('output-div', responseData.message);
 
-        window.location.href = responseData.redirectURL
 
     }  
     catch(error) {
@@ -199,6 +204,5 @@ const matchPassword = (pwd, confirmPwd) => {
 confirmPwdInput.addEventListener('input', (e) => {
     const password = pwdInput.value;
     const confirmPassword = e.target.value;
-    console.log(password, confirmPassword);
     matchPassword(password, confirmPassword);
 })

@@ -1,10 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css">
-    <title>Document</title>
+    <%- include('../partials/header')  %>
+    <title>Sign Up</title>
 </head>
 <body>
 
@@ -16,7 +14,7 @@
         <p class="text-center text-lg font-medium">Sign up for a new account</p>
 
         <div id="output-div" class="hidden w-full rounded-lg border border-green-800 bg-green-100 p-5 pe-12 text-sm shadow-sm">
-          <p id="output-message" class="text-green-700">OTP has been sent to the mail</p>
+          <p id="output-message" class="text-green-700"></p>
         </div>
   
         <!-- for username input tag -->
@@ -27,6 +25,7 @@
               <input
                 id="username-input"
                 type="text"
+                autocomplete="true"
                 class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
                 placeholder="Enter User Name"
                 name="username"
@@ -43,6 +42,7 @@
             <input
               id="em-input"
               type="email"
+              autocomplete="true"
               class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Enter email"
               name="email"
@@ -60,6 +60,7 @@
             <input
               id="pwd-input"
               type="password"
+              autocomplete="true"
               class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Enter password"
               name="password"
@@ -99,6 +100,7 @@
             <input
               id="confirm-pwd-input"
               type="password"
+              autocomplete="true"
               class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Confirm password"
               name="confirmPassword"
@@ -138,6 +140,7 @@
             <input
               id="otp-input"
               type="password"
+              autocomplete="off"
               class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
               placeholder="Enter otp"
               name="otp"

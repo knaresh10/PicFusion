@@ -11,12 +11,12 @@ const transporter = nodemailer.createTransport({
 })
 
 
-const sendMailToUser = async (to, html) => {
+const sendMailToUser = async (to, html, subject) => {
     
     const options = {
         from : process.env.MAIL_EMAIL,
         to,
-        subject : "NodeMailer Testing",
+        subject,
         html,
     }
 

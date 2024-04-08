@@ -8,6 +8,13 @@ function displayErrorMessage(id, message) {
     errorElement.textContent = message;
 }
 
+const displayOutputMessage = (divId, message) => {
+    document.getElementById('output-message').textContent = message;
+    console.log(document.getElementById('output-message'))
+    document.getElementById(divId).classList.toggle('hidden');
+}
+
+
 loginForm.addEventListener("submit", async (e) => {
     e.preventDefault();
 
@@ -41,13 +48,15 @@ loginForm.addEventListener("submit", async (e) => {
             return ;
         }
 
-        loginForm.reset();
-
+        
         sessionStorage.setItem('username' , responseData.username);
-
-        alert(responseData.message);
-           
-        window.location.href = responseData.redirectURL
+        
+        setTimeout(() => {
+            loginForm.reset();
+            displayOutputMessage('output-div', "");
+            window.location.href = responseData.redirectURL
+        }, 1500);
+        displayOutputMessage('output-div', responseData.message);
         
     }
     catch (error) {

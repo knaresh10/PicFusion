@@ -7,7 +7,7 @@ const storage = multer.diskStorage({
     cb(null, 'public/images/uploads')
   },
   filename: function (req, file, cb) {
-    const unique = uuidv4();
+    let unique = uuidv4();
     unique = unique.toString();
     unique = unique.replace('.', '_')
     cb(null, unique + path.extname(file.originalname));
