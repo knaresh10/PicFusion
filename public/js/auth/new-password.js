@@ -68,10 +68,6 @@ form.addEventListener('submit', async (e) => {
 
         const responseData = await response.json();
 
-        if(!response.ok) {
-            console.log(responseData.message);
-        }
-
         alert(responseData.message);
         window.location.href = '/auth/login';
     } catch (err) {

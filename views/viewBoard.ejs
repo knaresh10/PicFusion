@@ -37,7 +37,6 @@
                     method : 'DELETE',
                     url : `/board/${boardTitle}`,
                     success : (data) => {
-                        console.log(data);
                         window.location.href = '/profile'
                     },
                     error: function(xhr, status, error) {

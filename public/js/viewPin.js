@@ -114,7 +114,6 @@ const pinDiv = document.getElementById("pin-image");
 const contentDiv = document.getElementById("content-div");
 function setDiv1HeightToDiv2() {
   const pinHeight = pinDiv.clientHeight;
-  console.log(pinHeight);
   contentDiv.style.setProperty("max-height", pinHeight + "px");
   contentDiv.style.setProperty("min-height", pinHeight + "px");
 }
@@ -178,7 +177,6 @@ $(document).ready(() => {
     let url;
     if (boardName === "profile") url = `/pin/unsave/${pinId}`;
     else url = `/pin/unsave/${pinId}/${boardName}`;
-    console.log("data", boardName, url);
     $.ajax({
       type: "POST",
       url: url,
@@ -219,7 +217,6 @@ $(document).ready(() => {
           $("#board-error").text(data.message);
           return;
         }
-        console.log(data);
         $("#create-board-save-pin")[0].reset();
         $("#board-error").text("");
         $("#search-list").append(
@@ -275,7 +272,6 @@ $(document).ready(() => {
         url: `/pin/${pinId}/comment`,
         data: { message },
         success: (data) => {
-          console.log(data);
           $("#default-comment").addClass("hidden");
           $("#conversation").prepend(`<div class="py-1 border-opacity-40 flex flex-row gap-1 w-full mt-1">
                         <div class="w-9 h-9  rounded-full overflow-hidden">
@@ -297,7 +293,6 @@ $(document).ready(() => {
   // delete the pin
 
   $("#delete-pin").click(() => {
-    console.log("delete pin has been clicked");
     $.ajax({
       method: "DELETE",
       url: `/pin/${pinId}/delete`,

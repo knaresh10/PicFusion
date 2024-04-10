@@ -10,7 +10,6 @@ const handleLandingPage = (req, res) => {
 }
 
 const handleFeedDisplay = async (req, res) => {
-    console.log(req.user);
     const pins = await  Pin.find().populate('author');
     const profile = await Profile.findOne({user : req.user.id});
     return res.render('feed', {user : req.user, pins, profile});

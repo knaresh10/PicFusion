@@ -10,7 +10,6 @@ function displayErrorMessage(id, message) {
 
 const displayOutputMessage = (divId, message) => {
     document.getElementById('output-message').textContent = message;
-    console.log(document.getElementById('output-message'))
     document.getElementById(divId).classList.toggle('hidden');
 }
 

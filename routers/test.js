@@ -54,7 +54,6 @@ router.get('/listFiles', async (req, res) => {
 
 
 router.post('/upload', upload.single('file'), (req, res) => {
-    console.log('hello');
     if(!req.body.fName.trim()){
         res.send({
             success:false,
@@ -93,7 +92,6 @@ router.post('/upload', upload.single('file'), (req, res) => {
 })
 
 router.delete('/deleteFile/:key', async (req, res) => {
-    console.log(req.params.key)
     if(!req.params.key) {
         res.send({
             success : false,

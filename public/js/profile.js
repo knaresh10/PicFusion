@@ -22,7 +22,6 @@ $(document).ready(() => {
             url : `/board/create`,
             data : {name , secret},
             success : (data) => {
-                console.log(data);
                 if(data.message && data.message.includes('board')) {
                     $('#board-error').text(data.message);
                     return ;

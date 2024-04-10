@@ -48,7 +48,6 @@ const verifyOTPFetchRequest = async (email, otp) => {
         const responseData = await response.json();
 
         if(!response.ok) {
-            console.log('hello');
             if(responseData.message.includes("OTP")) {
                 displayErrorMessage('otp-error', responseData.message);
             } else {

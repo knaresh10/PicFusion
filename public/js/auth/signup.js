@@ -19,7 +19,6 @@ function displayErrorMessage(id, message) {
 
 const displayOutputMessage = (divId, message) => {
     document.getElementById('output-message').textContent = message;
-    console.log(document.getElementById('output-message'))
     document.getElementById(divId).classList.toggle('hidden');
 }
 
@@ -37,7 +36,6 @@ const sendOTP = async (userData) => {
         const responseData = await response.json();
         
         if(!response.ok) {
-            console.log(responseData.message)
             if(responseData.message.includes('Username')) {
                 displayErrorMessage('username-error', responseData.message);
             } else {
@@ -60,7 +58,6 @@ const sendOTP = async (userData) => {
         
         setTimeout(() => {
             displayOutputMessage('output-div', "");
-            console.log(responseData);
     
             divOTP.classList.remove('hidden');
     
