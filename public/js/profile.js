@@ -7,10 +7,8 @@ $(document).ready(() => {
         $('#create-modal').addClass('hidden');
     })
 
-    
     $('#board-create').submit((e) => {
         e.preventDefault();
-
 
         let name = $('#name').val();
         name = name.trim();
@@ -20,7 +18,7 @@ $(document).ready(() => {
             return ;
         }
         
-        const secret = $('#secret').val();
+        let secret = $('#secret').prop('checked') ? "yes" : "no";
         
         $.ajax({
             type : 'POST',
@@ -28,6 +26,7 @@ $(document).ready(() => {
             data : {name , secret},
             success : (data) => {
                 if(data.message && data.message.includes('board')) {
+                    console.log(data.message);
                     $('#board-error').text(data.message);
                     return ;
                 }

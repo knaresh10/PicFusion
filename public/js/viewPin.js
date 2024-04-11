@@ -133,13 +133,12 @@ $(document).ready(() => {
   // get the initial data
   setSearchBoardPosition();
 
-  let img = $('#pin-image');
-  if(img.prop('complete')) {
+  let img = $("#pin-image");
+  if (img.prop("complete")) {
     setDiv1HeightToDiv2();
   } else {
-    img.on('load', setDiv1HeightToDiv2);
+    img.on("load", setDiv1HeightToDiv2);
   }
-  
 
   //  code for initial request to get the data when window is opened
   $.ajax({
@@ -167,6 +166,7 @@ $(document).ready(() => {
       console.log(xhr, status, error);
     },
   });
+
 
   // all the user to save the pin into quick save
   $("#save-btn").click(() => {
@@ -217,11 +217,14 @@ $(document).ready(() => {
     e.preventDefault();
 
     let name = $("#name").val();
-    let secret = $("#secret").val();
-
-    if (name.trim() === "") {
+    name = name.trim();
+    if (name == "") {
+      $("#board-error").text("board name can't be empty");
+      $("#name").val("");
       return;
     }
+
+    let secret = $("#secret").prop("checked") ? "yes" : "no";
 
     $.ajax({
       type: "POST",
@@ -288,7 +291,8 @@ $(document).ready(() => {
         data: { message },
         success: (data) => {
           $("#default-comment").addClass("hidden");
-          $("#conversation").prepend(`<div class="py-1 border-opacity-40 flex flex-row gap-1 w-full mt-1">
+          $("#conversation")
+            .prepend(`<div class="py-1 border-opacity-40 flex flex-row gap-1 w-full mt-1">
                         <div class="w-9 h-9  rounded-full overflow-hidden">
                             <img src="${profilePic}" alt="profile pic" class="w-full h-full object-cover">
                         </div>
