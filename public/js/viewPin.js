@@ -113,20 +113,33 @@ hideCreateBoardModal.addEventListener("click", () => {
 const pinDiv = document.getElementById("pin-image");
 const contentDiv = document.getElementById("content-div");
 function setDiv1HeightToDiv2() {
+  // console.log('hello')
   const pinHeight = pinDiv.clientHeight;
   contentDiv.style.setProperty("max-height", pinHeight + "px");
   contentDiv.style.setProperty("min-height", pinHeight + "px");
 }
-setDiv1HeightToDiv2();
+// setDiv1HeightToDiv2();
 window.addEventListener("resize", setDiv1HeightToDiv2);
 
 // like and unlike
 // const likeBtn = document.getElementById('heart-button');
 // like
 
+// const imageLoaded = () => {
+//   setDiv1HeightToDiv2
+// }
+
 $(document).ready(() => {
   // get the initial data
   setSearchBoardPosition();
+
+  let img = $('#pin-image');
+  if(img.prop('complete')) {
+    setDiv1HeightToDiv2();
+  } else {
+    img.on('load', setDiv1HeightToDiv2);
+  }
+  
 
   //  code for initial request to get the data when window is opened
   $.ajax({
@@ -177,6 +190,8 @@ $(document).ready(() => {
     let url;
     if (boardName === "profile") url = `/pin/unsave/${pinId}`;
     else url = `/pin/unsave/${pinId}/${boardName}`;
+
+    console.log(url);
     $.ajax({
       type: "POST",
       url: url,
@@ -275,7 +290,7 @@ $(document).ready(() => {
           $("#default-comment").addClass("hidden");
           $("#conversation").prepend(`<div class="py-1 border-opacity-40 flex flex-row gap-1 w-full mt-1">
                         <div class="w-9 h-9  rounded-full overflow-hidden">
-                            <img src="/images/uploads/${profilePic}" alt="profile pic" class="w-full h-full object-cover">
+                            <img src="${profilePic}" alt="profile pic" class="w-full h-full object-cover">
                         </div>
                         <div>
 

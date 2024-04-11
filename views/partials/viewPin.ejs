@@ -2,7 +2,7 @@
 <div id="pin" class="py-8 w-full flex items-center justify-center">
     <div class="rounded-3xl w-[50%] overflow-hidden flex gap-4 shadow-lg">
         <div class="w-1/2 overflow-hidden ">
-            <img id="pin-image" src="/images/uploads/<%= pin.image %>" alt="" class="w-full h-auto object-cover">
+            <img id="pin-image" src="<%= pin.image %>" alt="" class="w-full h-auto object-cover">
         </div>
         <div id="content-div" class="w-1/2 py-7 flex flex-col">
             <!-- different buttons -->
@@ -67,7 +67,7 @@
                     </div>
                     <div class="flex flex-row w-full gap-3">
                         <div class="w-14 h-14  rounded-full overflow-hidden border-1 border-black">
-                            <img src="/images/uploads/<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
+                            <img src="<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
                         </div>
                         <div class="flex flex-grow">
                             <input type="text" name="comment" id="comment" class="w-full border-slate-500 rounded-2xl" placeholder="Add a comment">
@@ -87,7 +87,14 @@
         <ul id="search-list" class="">
             <div class="max-h-56 overflow-auto">
                 <% profile.boards.forEach(board => { %>
-                    <li class="w-full px-4 py-4 hover:bg-slate-300" onclick="savePin('<%= board._id %>', '<%= pin._id %>')"><%= board.title %></li>
+                    <li class="w-full px-4 py-4 hover:bg-slate-300 flex justify-between" onclick="savePin('<%= board._id %>', '<%= pin._id %>')">
+                        <%= board.title %>
+                        <% if (board.private) { %>
+                            <span class="material-symbols-outlined">
+                                lock
+                            </span>
+                        <% } %>
+                    </li>
                 <% }) %>
             </div>
         </ul>
@@ -103,5 +110,6 @@
     const profileUsername = '<%- profile.username %>'
     const profilePic = '<%- profile.profilePic %>'
     const pinId = '<%- pin._id %>'
+    const pinURL = '<%- pin.image %>'
 </script>
 <script src="/js/viewPin.js"></script>

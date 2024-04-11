@@ -2,6 +2,11 @@
 const pwdInput = document.getElementById('pwd-input');
 const showPwd = document.getElementById('show-password');
 
+const displayOutputMessage = (divId, message) => {
+    document.getElementById('output-message').textContent = message;
+    document.getElementById(divId).classList.toggle('hidden');
+}
+
 showPwd.addEventListener('click', () => {
     pwdInput.type = pwdInput.type == 'text' ? 'password' : 'text';
 })
@@ -68,8 +73,14 @@ form.addEventListener('submit', async (e) => {
 
         const responseData = await response.json();
 
-        alert(responseData.message);
-        window.location.href = '/auth/login';
+        setTimeout(() => {
+            form.reset();
+            displayOutputMessage('output-div', "");
+            window.location.href = '/auth/login';
+        }, 1500);
+        displayOutputMessage('output-div', responseData.message);
+        // alert(responseData.message);
+        // window.location.href = '/auth/login';
     } catch (err) {
         console.log(err);
     }

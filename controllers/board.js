@@ -4,6 +4,7 @@ const Profile = require("../models/profile");
 const handleViewBoard = async (req, res) => {
     const boardId = req.params.boardId;
     const board = await Board.findById(boardId).populate('pins');
+    if(board.pins.length == 0) return res.redirect('/profile');
     const profile = await Profile.findById(req.profile.id);
     res.render('viewBoard', {board, user : req.user.id, profile});
 }

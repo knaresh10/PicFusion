@@ -14,7 +14,7 @@
                     <% profile.quickSave.forEach(pin => { %>
                         <div class="h-auto rounded-3xl overflow-hidden shadow-md">
                             <!-- <div class="w-full h-full z-10 opacity-30"></div> -->
-                            <a href="/pin/<%= pin._id %>"><img src="/images/uploads/<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
+                            <a href="/pin/<%= pin._id %>"><img src="<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
                         </div>
                     <% }) %>
                 </div>

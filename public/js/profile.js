@@ -11,12 +11,17 @@ $(document).ready(() => {
     $('#board-create').submit((e) => {
         e.preventDefault();
 
-        const name = $('#name').val();
-        const secret = $('secret').val();
-        
-        // console.log(name, secret);
-        // return ;
 
+        let name = $('#name').val();
+        name = name.trim();
+        if(name == '') {
+            $('#board-error').text("board name can't be empty");
+            $('#name').val('');
+            return ;
+        }
+        
+        const secret = $('#secret').val();
+        
         $.ajax({
             type : 'POST',
             url : `/board/create`,

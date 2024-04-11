@@ -148,7 +148,9 @@ const handleForgotPasswordSendOTP = async (req, res) => {
                 <p>Here is your otp for resetting password ${otp}</p>
             </div>
             `
-        await mail.sendMailToUser(email, html);
+
+        const subject = 'OTP for password Reset'
+        await mail.sendMailToUser(email, html, subject);
 
         return res.status(200).json({message : "otp has been sent"});
     } catch(error) {

@@ -16,12 +16,9 @@ const profileSchema = new mongoose.Schema({
     about : {
         type : String,
     },
-    DOB : {
-        type : Date
-    },
     profilePic : {
         type : String,
-        default : "Learning-bro.svg"
+        default : "https://picfusion.s3.ap-south-1.amazonaws.com/profilePics/Learning-bro.svg"
     },
     profileSetupCompleted : {
         type : Boolean,

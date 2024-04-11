@@ -9,7 +9,7 @@
 
 @layer utilities {
     .nav {
-        @apply relative text-text-color font-sans font-bold z-[1] tracking-tight
+        @apply relative text-text-color font-raleway font-bold z-[1] tracking-tight
     }
 
     .nav::after {

@@ -3,8 +3,7 @@ const Pin = require('../models/pin');
 const Profile = require('../models/profile');
 const Board = require('../models/board');
 const { default: mongoose, mongo } = require('mongoose');
-const streamFile = require('../services/stream');
-const s3Upload = require('../services/s3Upload');
+const {s3PinUpload} = require('../services/s3Upload');
 
 
 const handleGetPinData = async (req, res) => {
@@ -47,14 +46,13 @@ const handleCreatePin = async (req, res) => {
 
     let tagArray;
     if(tags !== '') tagArray = tags.split(' ');
-    
-    let stream = await streamFile.GetFileStream(req.file);
-    let message = await s3Upload.s3PinUpload(stream, req.file);
+
+    const url = await s3PinUpload(req.file, 'pins');
     
     let data = {
         title,
         description,
-        image : req.file.filename,
+        image : url,
         author : req.profile.id
     };
     

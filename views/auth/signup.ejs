@@ -6,12 +6,12 @@
 </head>
 <body>
 
-<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8">
+<div class="mx-auto max-w-screen-xl px-4 py-16 sm:px-6 lg:px-8 font-raleway">
     <div class="mx-auto max-w-lg">
-      <h1 class="text-center text-2xl font-bold text-indigo-600 sm:text-3xl">Get started today</h1>
+      <h1 class="text-center text-2xl font-bold text-secondary sm:text-3xl">Get started today</h1>
 
       <form id="signup-form" class="mb-0 mt-6 space-y-4 rounded-lg p-4 shadow-lg sm:p-6 lg:p-8">
-        <p class="text-center text-lg font-medium">Sign up for a new account</p>
+        <p class="text-center text-lg text-text-color font-medium">Sign up for a new account</p>
 
         <div id="output-div" class="hidden w-full rounded-lg border border-green-800 bg-green-100 p-5 pe-12 text-sm shadow-sm">
           <p id="output-message" class="text-green-700"></p>
@@ -26,7 +26,7 @@
                 id="username-input"
                 type="text"
                 autocomplete="true"
-                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm input-field-ring "
                 placeholder="Enter User Name"
                 name="username"
               />
@@ -174,14 +174,14 @@
   
         <button
           type="submit"
-          class="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white select-none"
+          class="block w-full rounded-lg bg-secondary px-5 py-3 text-sm font-bold text-white select-none"
         >
           send OTP
         </button>
   
         <p class="text-center text-sm text-gray-500">
             have an account?
-          <a class="underline" href="/auth/login">Log in</a>
+          <a class="underline text-text-color" href="/auth/login">Log in</a>
         </p>
       </form>
     </div>

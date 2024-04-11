@@ -7,6 +7,11 @@ function displayErrorMessage(id, message) {
     errorElement.textContent = message;
 }
 
+const displayOutputMessage = (divId, message) => {
+    document.getElementById('output-message').textContent = message;
+    document.getElementById(divId).classList.toggle('hidden');
+}
+
 const sendOTPFetchRequest = async (email) => {
     try {
         const response = await fetch('/auth/forgot-password-send-otp', {
@@ -26,9 +31,14 @@ const sendOTPFetchRequest = async (email) => {
             
             return ;
         }
-        alert(responseData.message);
-        otpDiv.classList.remove('hidden');
-        submitBtn.innerText = "verify OTP";
+        // alert(responseData.message);
+        setTimeout(() => {
+            otpDiv.classList.remove('hidden');
+            submitBtn.innerText = "verify OTP";
+            displayOutputMessage('output-div', "");
+        }, 1500);
+        displayOutputMessage('output-div', responseData.message);
+        
     } catch(err) {
         console.log(err);
     }
@@ -56,9 +66,16 @@ const verifyOTPFetchRequest = async (email, otp) => {
             return ;
         }
 
-        alert(responseData.message);
+        // alert(responseData.message);
 
-        window.location.href = "/auth/new-password";
+        setTimeout(() => {
+            form.reset();
+            displayOutputMessage('output-div', "");
+            window.location.href = "/auth/new-password"
+        }, 1500);
+        displayOutputMessage('output-div', responseData.message);
+
+        // window.location.href = "/auth/new-password";
 
     } catch(error) {
         console.log(error);

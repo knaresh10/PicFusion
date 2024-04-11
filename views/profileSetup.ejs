@@ -1,14 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <!-- <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/css/output.css"> -->
     <%- include('./partials/header') %>
     <title>Profile Setup</title>
 </head>
 <body>
-    <div class="w-full flex flex-col items-center mt-9">
+    <div class="w-full flex flex-col items-center mt-9 font-raleway">
         <h3 class="text-2xl font-bold p-3"><%= title %> profile</h3>
         <hr class="opacity-65">
         <div class="w-full flex flex-col items-center">
@@ -17,7 +14,7 @@
                     <i class="text-zinc-800 ri-pencil-fill" id="upload-icon"></i>
                 </span>
                 <div class="w-40 h-40 rounded-full overflow-hidden border-2">
-                    <img id="profile-display" src="/images/uploads/<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
+                    <img id="profile-display" src="<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
                 </div>
             </div>
             <div class="mx-auto max-w-[800px] px-4 sm:px-6 lg:px-8">
@@ -63,7 +60,7 @@
                       </div>
                     </div>
 
-                    <div>
+                    <!-- <div>
                         <label for="DOB" class="sr-only">Date of Birth</label>
                         <div class="relative">
                           <input
@@ -72,11 +69,11 @@
                             name="DOB"
                           />
                         </div>
-                    </div>
+                    </div> -->
 
                     <button
                       type="submit"
-                      class="block w-full rounded-lg bg-indigo-600 px-5 py-3 text-sm font-medium text-white"
+                      class="block w-full rounded-lg bg-secondary px-5 py-3 text-sm font-medium text-white"
                     >
                       Save
                     </button>

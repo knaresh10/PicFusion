@@ -6,9 +6,14 @@
 </head>
 <body>
     <%- include('./partials/nav') %>
-    <div class="flex flex-col items-center mt-5">
+    <div class="flex flex-col items-center mt-5 font-raleway">
         <div class="flex flex-row gap-2 px-2 py-3 items-center ">
             <p class="text-3xl font-bold"><%= board.title %></p>
+            <% if (board.private) { %>
+                <span class="material-symbols-outlined">
+                    lock
+                </span>
+            <% } %>
             <span id="board-delete" class="material-symbols-outlined cursor-pointer">
                 delete
             </span>
@@ -19,7 +24,7 @@
                 <div class="columns-1 gap-2 sm:columns-2 sm:gap-4 md:columns-4 lg:columns-7 [&>div:not(:first-child)]:mt-4">
                     <% board.pins.forEach(pin => { %>
                         <div class="h-auto rounded-3xl overflow-hidden">
-                            <a href="/pin/<%= pin._id %>"><img src="/images/uploads/<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
+                            <a href="/pin/<%= pin._id %>"><img src="<%= pin.image %>" class=" w-full h-full object-cover" alt="pin"></a>
                         </div>
                     <% }) %>
                 </div>

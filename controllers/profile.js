@@ -1,6 +1,7 @@
 const Profile = require('../models/profile');
 const Pin = require('../models/pin');
 const Board = require('../models/board');
+const { s3PinUpload } = require('../services/s3Upload');
 
 const handleProfile = async (req, res) => {
     const profile = await Profile.findOne({user : req.user.id}).populate(['pins', 'quickSave', 'boards']);
@@ -24,17 +25,17 @@ const handleGetProfileEdit = async (req, res) => {
 }
 
 const handleProfileEdit = async (req, res) => {
-    const {username, fullname, about, DOB} = req.body;
+    const {username, fullname, about} = req.body;
     // const 
     const updateFields = {
         fullname,
         about,
-        DOB,
         profileSetupCompleted : true
     }
 
     if(req.file) {
-        updateFields.profilePic = req.file.filename;
+        const url = await s3PinUpload(req.file, 'profilePics');
+        updateFields.profilePic = url;
     }
     const result = await Profile.findOneAndUpdate({username}, updateFields);
 
@@ -43,9 +44,24 @@ const handleProfileEdit = async (req, res) => {
     
 const handleProfileView = async (req, res) => {
     const profileId = req.params.profileId;
-    if(profileId == req.profile.Id) return res.redirect('/profile');
-    const profile = await Profile.findById(profileId).populate(['pins', 'quickSave', 'boards']);
-    return res.render('profileView', {user : req.user, profile});
+    if(profileId == req.profile.id) return res.redirect('/profile');
+    const profile = await Profile.findById(req.profile.id, {username : 1, profilePic : 1})
+    const searchProfile = await Profile.findById(profileId)
+    .populate(['pins'])
+    .populate({
+        path: 'boards',
+        match: { private: false } 
+    })
+    .exec();
+    if (searchProfile && searchProfile.boards) {
+        for (let i = 0; i < searchProfile.boards.length; i++) {
+            if (searchProfile.boards[i]) {
+                await searchProfile.boards[i].populate('pins');
+            }
+        }
+    }
+    // console.log(searchProfile.boards)
+    return res.render('profileView', {user : req.user, searchProfile, profile});
 }
 
 module.exports = {

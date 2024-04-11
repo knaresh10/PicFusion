@@ -9,15 +9,17 @@ module.exports = {
       fontFamily : {
         esthetique : ['esthetique', 'sans-serif'],
         raleway : ['Raleway', 'sans-serif'],
-        montserrat : ['Montserrat', 'sans-serif']
+        montserrat : ['Montserrat', 'sans-serif'],
+        poppins : ['Poppins', 'sans-serif']
       },
       colors : {
         'primary' : '#0745d3',
-        'secondary' : '#fa712a',
+        'secondary' : '#fe6236',
         'tertiary' : '#fab775',
-        'bg-primary' : '#fefdfe',
-        'stroke-color' : '#3dad3cf',
-        'text-color' : '#181b41',
+        'bg-primary' : '#fffbff',
+        'stroke-color' : '#d1d5e4',
+        'text-color' : '#0f1417',
+        'special' : '#0023d6'
       }
     },
   },
