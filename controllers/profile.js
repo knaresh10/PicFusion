@@ -1,7 +1,7 @@
 const Profile = require('../models/profile');
 const Pin = require('../models/pin');
 const Board = require('../models/board');
-const { s3PinUpload } = require('../services/s3Upload');
+const s3Upload = require('../services/s3Upload');
 
 const handleProfile = async (req, res) => {
     const profile = await Profile.findOne({user : req.user.id}).populate(['pins', 'quickSave', 'boards']);
@@ -34,7 +34,7 @@ const handleProfileEdit = async (req, res) => {
     }
 
     if(req.file) {
-        const url = await s3PinUpload(req.file, 'profilePics');
+        const url = await s3Upload.s3PinUpload(req.file, 'profilePics');
         updateFields.profilePic = url;
     }
     const result = await Profile.findOneAndUpdate({username}, updateFields);
