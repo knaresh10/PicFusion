@@ -43,14 +43,14 @@
     
             <!-- create board modal -->
             <div id="board-modal" class="hidden absolute w-full h-screen top-0 flex justify-center items-center bg-slate-500 bg-opacity-35 z-[2]">
-                <div class="bg-white rounded-lg px-4 py-8">
-                    <p class="w-full text-2xl font-bold text-center">Create Board</p>
-                    <form id="board-create" class="flex flex-col">
+                <div class="bg-white rounded-lg px-4 py-8 min-w-[400px]">
+                    <p class="w-full text-2xl font-bold text-center mb-5">Create Board</p>
+                    <form id="board-create" class="flex flex-col ">
                         <!-- <label for="name">name</label> -->
                         <input type="text" name="name" id="name" class="rounded-lg  py-3" placeholder="Enter board Name"> 
                         <p id="board-error" class="text-sm px-2 mt-2 text-red-400"></p>
     
-                        <div class="mt-2 flex flex-row items-center gap-2">
+                        <div class="mt-2 flex flex-row items-center gap-2 flex-grow">
                             <input type="checkbox" name="secret" id="secret" value="yes" class="rounded-full">
                             <label for="secret">Keep this Board Secret</label>
                         </div>
