@@ -1,66 +1,93 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+  <head>
     <%- include('./partials/header') %>
     <title>Profile Setup</title>
-</head>
-<body>
+  </head>
+  <body>
+    <% if (title == 'edit') { %>
+    <button
+      class="absolute rounded-full w-10 h-10 shadow-xl hover:shadow-inner flex justify-center items-center top-[50px] left-[40px]"
+    >
+      <a href="javascript:history.back()"
+        ><span class="material-symbols-outlined"> arrow_back </span></a
+      >
+    </button>
+
+    <% } %>
     <div class="w-full flex flex-col items-center mt-9 font-raleway">
-        <h3 class="text-2xl font-bold p-3"><%= title %> profile</h3>
-        <hr class="opacity-65">
-        <div class="w-full flex flex-col items-center">
-            <div class="relative">
-                <span class=" w-10 h-10 absolute bottom-0 right-0 rounded-full flex items-center justify-center bg-zinc-200">
-                    <i class="text-zinc-800 ri-pencil-fill" id="upload-icon"></i>
-                </span>
-                <div class="w-40 h-40 rounded-full overflow-hidden border-2">
-                    <img id="profile-display" src="<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
+      <h3 class="text-2xl font-bold p-3"><%= title %> profile</h3>
+      <hr class="opacity-65" />
+      <div class="w-full flex flex-col items-center">
+        <div class="relative">
+          <span
+            class="w-10 h-10 absolute bottom-0 right-0 rounded-full flex items-center justify-center bg-zinc-200"
+          >
+            <i class="text-zinc-800 ri-pencil-fill" id="upload-icon"></i>
+          </span>
+          <div class="w-40 h-40 rounded-full overflow-hidden border-2">
+            <img
+              id="profile-display"
+              src="<%= profile.profilePic %>"
+              alt="profile pic"
+              class="w-full h-full object-cover"
+            />
+          </div>
+        </div>
+        <div class="mx-auto max-w-[800px] px-4 sm:px-6 lg:px-8">
+          <div class="mx-auto min-w-[475px] max-w-lg">
+            <form
+              action="/profile/edit"
+              method="post"
+              enctype="multipart/form-data"
+              class="mb-0 mt-2 space-y-4 rounded-lg p-4 sm:p-6 lg:p-8"
+            >
+              <input hidden type="file" id="profile-pic" name="profile-pic" />
+              <!-- for full name input tag -->
+
+              <div>
+                <label for="username" class="sr-only">username</label>
+
+                <div class="relative">
+                  <input
+                    type="text"
+                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-gray-200"
+                    placeholder="Enter Username"
+                    name="username"
+                    value="<%= profile.username %>"
+                    readonly
+                  />
                 </div>
-            </div>
-            <div class="mx-auto max-w-[800px] px-4 sm:px-6 lg:px-8">
-                <div class="mx-auto min-w-[475px] max-w-lg">
-                  <form action="/profile/edit" method="post" enctype="multipart/form-data" class="mb-0 mt-2 space-y-4 rounded-lg p-4 sm:p-6 lg:p-8">
-                    <input hidden type="file" id="profile-pic" name="profile-pic">
-                    <!-- for full name input tag -->
+              </div>
+              <div>
+                <label for="fullname" class="sr-only">Fullname</label>
 
-                    <div>
-                      <label for="username" class="sr-only">username</label>
-              
-                      <div class="relative">
-                        <input
-                          type="text"
-                          class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm bg-gray-200"
-                          placeholder="Enter Username"
-                          name="username"
-                          value="<%= profile.username %>"
-                          readonly
-                        />
-                      </div>
-                  </div>
-                    <div>
-                        <label for="fullname" class="sr-only">Fullname</label>
-                
-                        <div class="relative">
-                          <input
-                            type="text"
-                            class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
-                            placeholder="Enter Full Name"
-                            name="fullname"
-                            value="<%= profile.fullname %>"
-                          />
-                        </div>
-                    </div>
-                    <!-- for textarea  tag -->
-                    <div>
-                      <label for="about" class="sr-only">About</label>
-              
-                      <div class="relative">
-                        <textarea name="about" class="w-full min-h-16 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm" 
-                        placeholder="tell about your story"><%= profile.about %></textarea>
-                      </div>
-                    </div>
+                <div class="relative">
+                  <input
+                    type="text"
+                    class="w-full rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                    placeholder="Enter Full Name"
+                    name="fullname"
+                    value="<%= profile.fullname %>"
+                  />
+                </div>
+              </div>
+              <!-- for textarea  tag -->
+              <div>
+                <label for="about" class="sr-only">About</label>
 
-                    <!-- <div>
+                <div class="relative">
+                  <textarea
+                    name="about"
+                    class="w-full min-h-16 rounded-lg border-gray-200 p-4 pe-12 text-sm shadow-sm"
+                    placeholder="tell about your story"
+                  >
+<%= profile.about %></textarea
+                  >
+                </div>
+              </div>
+
+              <!-- <div>
                         <label for="DOB" class="sr-only">Date of Birth</label>
                         <div class="relative">
                           <input
@@ -71,19 +98,17 @@
                         </div>
                     </div> -->
 
-                    <button
-                      type="submit"
-                      class="block w-full rounded-lg bg-secondary px-5 py-3 text-sm font-medium text-white"
-                    >
-                      Save
-                    </button>
-              
-                    
-                  </form>
-                </div>
-              </div>
+              <button
+                type="submit"
+                class="block w-full rounded-lg bg-secondary px-5 py-3 text-sm font-medium text-white"
+              >
+                Save
+              </button>
+            </form>
+          </div>
         </div>
+      </div>
     </div>
     <script src="/js/profile/profile.js"></script>
-</body>
+  </body>
 </html>
