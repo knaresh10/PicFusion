@@ -54,8 +54,14 @@
       <div class="flex flex-col grow overflow-auto">
         <!-- pin details -->
         <div class="w-full px-7 mt-4">
-          <h2 class="mb-4 text-xl font-semibold"><%= pin.title %></h2>
-          <div class="w-full mb-4"><%- include('./profileStat') %></div>
+          <h2 class=" text-xl font-semibold"><%= pin.title %></h2>
+          <p class="mt-2"><%= pin.description %></p>
+          <div class="">
+            <% pin.tags.forEach(tag => { %>
+             <p class="text-sm text-blue-600 font-semibold w-full inline">#<%= tag %></p>
+            <% }) %>
+          </div>
+          <div class="w- my-4"><%- include('./profileStat') %></div>
         </div>
 
         <!-- comment section -->
