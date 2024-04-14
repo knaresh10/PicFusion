@@ -32,7 +32,7 @@
       $("#search-close").addClass("hidden");
       return;
     }
-	$("#search-close").removeClass("hidden");
+    $("#search-close").removeClass("hidden");
     if (query[0] == "@" && query.length > 1) {
       query = query.slice(1);
       $.ajax({
@@ -51,25 +51,34 @@
     }
   });
 
-  $("#search-close").click(() => {
+  const searchClose = () => {
     $("#search-dropdown").html("");
     $("#search-close").addClass("hidden");
     $("#search").blur();
     $("#search").val("");
+  }
+
+  $("#search-close").click(() => {
+    searchClose();
   });
+
+  $('#search-dropdown').click(() => {
+    searchClose();
+  })
 
   $("#search").keypress(function (e) {
     if (e.which === 13) {
       e.preventDefault();
       let query = $(this).val().trim();
       if (query === "" || query[0] == "@") {
-		$("#search-close").addClass("hidden");
+        $("#search-close").addClass("hidden");
         return;
       }
-      let url = "/search-pins/"+query; 
-	  console.log('Action URL:', url);
+      let url = "/search-pins/" + query;
+      console.log("Action URL:", url);
       $("#searchForm").attr("action", url);
       $("#searchForm").submit();
+      searchClose();
     }
   });
 </script>

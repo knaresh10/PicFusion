@@ -1,9 +1,9 @@
 <div class="">
-  <div class="w-12 h-12 rounded-full overflow-hidden border-2" onclick="dropDownMenu()">
-    <img src="<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
+  <div  class="w-12 h-12 rounded-full overflow-hidden border-2" onclick="dropDownMenu()">
+    <img id="dropDown" src="<%= profile.profilePic %>" alt="profile pic" class="w-full h-full object-cover">
   </div>
   <div id="dropDownDiv" x-transition:enter="transition ease-out duration-100" x-transition:enter-start="transform opacity-0 scale-95" x-transition:enter-end="transform opacity-100 scale-100" x-transition:leave="transition ease-in duration-75" x-transition:leave-start="transform opacity-100 scale-100" x-transition:leave-end="transform opacity-0 scale-95" class="hidden absolute top-[70px] right-0 w-40 px-5 py-3 dark:bg-gray-800 bg-white rounded-lg shadow border dark:border-transparent mt-3 mr-3">
-    <ul class="space-y-3 dark:text-white">
+    <ul class="space-y-3 dark:text-white" onclick="dropDownMenu()">
       <li class="font-medium">
         <a href="/profile" class="flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:border-tertiary">
           <div class="mr-3">
@@ -38,4 +38,13 @@
   const dropDownMenu = () => {
     dropDownDiv.classList.toggle('hidden');
   }
+  document.addEventListener('click', (e) => {
+    console.log(e.target.id);
+    if(!(e.target.id === 'dropDown')) {
+      dropDownDiv.classList.add('hidden');
+    }
+    if(!(e.target.id === 'search')) {
+      searchClose();
+    }
+  })
 </script>
