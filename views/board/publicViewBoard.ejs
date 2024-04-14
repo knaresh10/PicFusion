@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <%- include('./partials/header') %>
+    <%- include('../partials/header') %>
     <title>view Board</title>
   </head>
   <body>
-    <%- include('./partials/nav') %>
+    <%- include('../partials/nav') %>
     <button
       class="absolute rounded-full w-10 h-10 shadow-xl hover:shadow-inner flex justify-center items-center top-[100px] left-[40px]"
     >
@@ -17,16 +17,7 @@
     <div class="flex flex-col items-center mt-5 font-raleway">
       <div class="flex flex-row gap-2 px-2 py-3 items-center">
         <p class="text-3xl font-bold"><%= board.title %></p>
-        <% if (board.private) { %>
-        <span class="material-symbols-outlined"> lock </span>
-        <% } %>
-        <span
-          id="board-delete"
-          class="material-symbols-outlined cursor-pointer"
-        >
-          delete
-        </span>
-      </div>
+         </div>
       <!-- feed -->
       <div class="w-full justify-center flex flex-wrap gap-5 my-3">
         <div class="p-5 sm:p-8">
@@ -47,23 +38,5 @@
         </div>
       </div>
     </div>
-
-    <script>
-      const boardTitle = "<%= board.title %>";
-      $(document).ready(() => {
-        $("#board-delete").click(() => {
-          $.ajax({
-            method: "DELETE",
-            url: `/board/${boardTitle}`,
-            success: (data) => {
-              window.location.href = "/profile";
-            },
-            error: function (xhr, status, error) {
-              console.error("Error:", error);
-            },
-          });
-        });
-      });
-    </script>
   </body>
 </html>

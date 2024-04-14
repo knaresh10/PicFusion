@@ -937,10 +937,6 @@ select {
   display: inline-flex;
 }
 
-.table {
-  display: table;
-}
-
 .grid {
   display: grid;
 }
@@ -1080,10 +1076,6 @@ select {
 
 .w-\[100vw\] {
   width: 100vw;
-}
-
-.w-\[236px\] {
-  width: 236px;
 }
 
 .w-\[256px\] {
@@ -1548,9 +1540,9 @@ select {
   line-height: 2.25rem;
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem;
+.text-5xl {
+  font-size: 3rem;
+  line-height: 1;
 }
 
 .text-7xl {
@@ -1578,18 +1570,12 @@ select {
   line-height: 1rem;
 }
 
-.text-8xl {
-  font-size: 6rem;
-  line-height: 1;
-}
-
-.text-5xl {
-  font-size: 3rem;
-  line-height: 1;
-}
-
 .font-bold {
   font-weight: 700;
+}
+
+.font-extrabold {
+  font-weight: 800;
 }
 
 .font-medium {
@@ -1598,10 +1584,6 @@ select {
 
 .font-semibold {
   font-weight: 600;
-}
-
-.font-extrabold {
-  font-weight: 800;
 }
 
 .leading-none {
@@ -1658,6 +1640,11 @@ select {
   color: rgb(94 43 255 / var(--tw-text-opacity));
 }
 
+.text-slate-300 {
+  --tw-text-opacity: 1;
+  color: rgb(203 213 225 / var(--tw-text-opacity));
+}
+
 .text-special {
   --tw-text-opacity: 1;
   color: rgb(0 35 214 / var(--tw-text-opacity));
@@ -1676,11 +1663,6 @@ select {
 .text-zinc-800 {
   --tw-text-opacity: 1;
   color: rgb(39 39 42 / var(--tw-text-opacity));
-}
-
-.text-slate-300 {
-  --tw-text-opacity: 1;
-  color: rgb(203 213 225 / var(--tw-text-opacity));
 }
 
 .underline {
@@ -1724,12 +1706,6 @@ select {
 .shadow-lg {
   --tw-shadow: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
   --tw-shadow-colored: 0 10px 15px -3px var(--tw-shadow-color), 0 4px 6px -4px var(--tw-shadow-color);
-  box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
-}
-
-.shadow-md {
-  --tw-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
-  --tw-shadow-colored: 0 4px 6px -1px var(--tw-shadow-color), 0 2px 4px -2px var(--tw-shadow-color);
   box-shadow: var(--tw-ring-offset-shadow, 0 0 #0000), var(--tw-ring-shadow, 0 0 #0000), var(--tw-shadow);
 }
 
@@ -2008,10 +1984,6 @@ select {
     gap: 1rem;
   }
 
-  .sm\:gap-8 {
-    gap: 2rem;
-  }
-
   .sm\:p-6 {
     padding: 1.5rem;
   }
@@ -2049,11 +2021,6 @@ select {
 
   .lg\:inline-block {
     display: inline-block;
-  }
-
-  .lg\:columns-5 {
-    -moz-columns: 5;
-         columns: 5;
   }
 
   .lg\:columns-7 {
@@ -2135,9 +2102,5 @@ select {
 
 .\[\&\>div\:not\(\:first-child\)\]\:mt-4>div:not(:first-child) {
   margin-top: 1rem;
-}
-
-.\[\&\>div\:not\(\:first-child\)\]\:mt-8>div:not(:first-child) {
-  margin-top: 2rem;
 }
 

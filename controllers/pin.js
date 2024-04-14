@@ -36,7 +36,7 @@ const handleGetPinData = async (req, res) => {
 
 const handleGetCreatePin = async (req, res) => {
   const profile = await Profile.findOne({ user: req.user.id });
-  return res.render("create", { user: req.user, profile });
+  return res.render("pin/createPin", { user: req.user, profile });
 };
 
 const handleCreatePin = async (req, res) => {
@@ -92,7 +92,7 @@ const handleViewPin = async (req, res) => {
       pinSavedAt = obj.board.title;
     }
   });
-  return res.render("pinDashboard", {
+  return res.render("pin/viewPin", {
     user: req.user,
     profile,
     pin,

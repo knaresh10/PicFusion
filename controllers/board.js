@@ -6,8 +6,16 @@ const handleViewBoard = async (req, res) => {
   const board = await Board.findById(boardId).populate("pins");
   if (board.pins.length == 0) return res.redirect("/profile");
   const profile = await Profile.findById(req.profile.id);
-  res.render("viewBoard", { board, user: req.user.id, profile });
+  res.render("board/viewBoard", { board, user: req.user.id, profile });
 };
+
+const handlePublicViewBoard = async (req, res) => {
+  const boardId = req.params.boardId;
+  const board = await Board.findById(boardId).populate("pins");
+  if (board.pins.length == 0) return res.redirect("/profile");
+  const profile = await Profile.findById(req.profile.id);
+  res.render("board/publicViewBoard", { board, user: req.user.id, profile });
+}
 
 const handleSavePinToBoard = async (req, res) => {
   const boardId = req.params.boardId;
@@ -110,6 +118,7 @@ const handleDeleteBoard = async (req, res) => {
 
 module.exports = {
   handleSavePinToBoard,
+  handlePublicViewBoard,
   handleCreateBoard,
   handleCreateBoardSavePin,
   handleViewBoard,

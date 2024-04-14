@@ -1,6 +1,4 @@
 const Profile = require('../models/profile');
-const Pin = require('../models/pin');
-const Board = require('../models/board');
 const s3Upload = require('../services/s3Upload');
 
 const handleProfile = async (req, res) => {
@@ -12,12 +10,12 @@ const handleProfile = async (req, res) => {
             }
         }
     }
-    return res.render('profile', {user : req.user, profile});
+    return res.render('profile/userProfile', {user : req.user, profile});
 }
 
 const handleGetProfileEdit = async (req, res) => {
     const profile = await Profile.findOne({user : req.user.id});
-    return res.render('profileSetup', {
+    return res.render('profile/editProfile', {
         title : !profile.profileSetupCompleted ? 'create' : 'edit',
         user : req.user,
         profile
@@ -61,7 +59,7 @@ const handleProfileView = async (req, res) => {
         }
     }
     // console.log(searchProfile.boards)
-    return res.render('profileView', {user : req.user, searchProfile, profile});
+    return res.render('profile/viewProfile', {user : req.user, searchProfile, profile});
 }
 
 module.exports = {
