@@ -1,37 +1,75 @@
-<div class="flex items-center gap-2 flex-grow relative border border-stroke-color rounded-full">
-    <span class="material-symbols-outlined absolute ml-3">search</span>
-    <input type="text" name="" id="search" class="w-full rounded-full  p-3 pl-10 text-muted border-none selection:border-none " placeholder="Search">
-	<span id="search-close" class="material-symbols-outlined absolute right-0 mr-3 hidden cursor-pointer">close</span>
-    <div id="search-dropdown" class="absolute bg-bg-primary top-[55px] w-full rounded-lg shadow z-10">
-    </div>
-</div>
+<form
+  class="flex items-center gap-2 flex-grow relative border border-stroke-color rounded-full"
+  id="searchForm"
+  action="/search-tag"
+  method="GET"
+>
+  <span class="material-symbols-outlined absolute ml-3">search</span>
+  <input
+    type="text"
+    name=""
+    id="search"
+    class="w-full rounded-full p-3 pl-10 text-muted border-none selection:border-none"
+    placeholder="To search for user start with @ like '@username' for pins search normally"
+  />
+  <span
+    id="search-close"
+    class="material-symbols-outlined absolute right-0 mr-3 hidden cursor-pointer"
+    >close</span
+  >
+  <div
+    id="search-dropdown"
+    class="absolute bg-bg-primary top-[55px] w-full rounded-lg shadow z-10"
+  ></div>
+</form>
 
 <script>
-	$('#search').on('input', function(){
-		let query = $(this).val();
-		if(query.length <= 0) {
-            $('#search-dropdown').html('');
-			$('#search-close').addClass('hidden');
-            return ;
-        }
-		$('#search-close').removeClass('hidden');
-		$.ajax({
-			url : '/search',
-			method : 'POST',
-			data : {query},
-			success : (data) => {
-                $('#search-dropdown').html('');
-				data.profiles.forEach(profile => {
-                    $('#search-dropdown').append(`<a href='/profile/view/${profile._id}'><p class="py-4 w-full hover:bg-slate-100 px-5">${profile.username}</p></a>`)
-                });
-			}
-		})
-	})
+  $("#search").on("input", function () {
+    let query = $(this).val();
+    query = query.trim();
+    if (query.length <= 0) {
+      $("#search-dropdown").html("");
+      $("#search-close").addClass("hidden");
+      return;
+    }
+	$("#search-close").removeClass("hidden");
+    if (query[0] == "@" && query.length > 1) {
+      query = query.slice(1);
+      $.ajax({
+        url: "/search",
+        method: "POST",
+        data: { query },
+        success: (data) => {
+          $("#search-dropdown").html("");
+          data.profiles.forEach((profile) => {
+            $("#search-dropdown").append(
+              `<a href='/profile/view/${profile._id}'><p class="py-4 w-full hover:bg-slate-100 px-5">${profile.username}</p></a>`
+            );
+          });
+        },
+      });
+    }
+  });
 
-	$('#search-close').click(() => {
-		$('#search-dropdown').html('');
-		$('#search-close').addClass('hidden');
-		$('#search').blur();
-		$('#search').val("");
-	})
+  $("#search-close").click(() => {
+    $("#search-dropdown").html("");
+    $("#search-close").addClass("hidden");
+    $("#search").blur();
+    $("#search").val("");
+  });
+
+  $("#search").keypress(function (e) {
+    if (e.which === 13) {
+      e.preventDefault();
+      let query = $(this).val().trim();
+      if (query === "" || query[0] == "@") {
+		$("#search-close").addClass("hidden");
+        return;
+      }
+      let url = "/search-pins/"+query; 
+	  console.log('Action URL:', url);
+      $("#searchForm").attr("action", url);
+      $("#searchForm").submit();
+    }
+  });
 </script>

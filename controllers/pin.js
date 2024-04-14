@@ -46,7 +46,7 @@ const handleCreatePin = async (req, res) => {
   const { title, description, tags } = req.body;
 
   let tagArray;
-  if (tags !== "") tagArray = tags.split(" ");
+  if (tags !== "") tagArray = tags.tirm().split(" ");
 
   const url = await s3Upload.s3PinUpload(req.file, "pins");
 

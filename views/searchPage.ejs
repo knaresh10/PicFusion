@@ -6,6 +6,11 @@
 </head>
 <body class="bg-bg-primary">
     <%- include("./partials/nav") %>
+    <% if (pins == "") { %>
+     <div class="w-full flex justify-center py-3 mt-10">
+        <p class="text-5xl font-raleway text-slate-300 font-extrabold">No pins Found <%= pins %></p>
+     </div>
+    <% } else { %>
     <div class="w-full justify-center flex flex-wrap gap-5 my-3">
         <div class="p-5 sm:p-8">
             <div class="columns-1 gap-2 sm:columns-2 sm:gap-4 md:columns-4 lg:columns-7 [&>div:not(:first-child)]:mt-4">
@@ -18,5 +23,6 @@
             </div>
         </div>
     </div>
+    <% } %>
 </body>
 </html>

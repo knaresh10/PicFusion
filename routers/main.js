@@ -8,6 +8,6 @@ const router = Router();
 router.get('/', handleLandingPage);
 router.get('/feed', checkForAuthentication('token'), checkForAuthentication('profile'), handleFeedDisplay);
 router.post('/search', checkForAuthentication('token'), checkForAuthentication('profile'), handleSearchUser);
-router.get('/search-tag/:query', checkForAuthentication('token'), checkForAuthentication('profile'), handleTagSearch);
+router.get('/search-pins/:query', checkForAuthentication('token'), checkForAuthentication('profile'), handleTagSearch);
 
 module.exports = router;
