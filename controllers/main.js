@@ -38,7 +38,7 @@ const handleSearchUser = async (req, res) => {
 }
 
 const handleTagSearch = async (req, res) => {
-    const query = req.body.query;
+    const query = req.params.query;
     const profile = await Profile.findOne({user : req.user.id});
     const pins = await Pin.aggregate([
         {
