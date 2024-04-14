@@ -1,7 +1,5 @@
 const Pin = require('../models/pin');
-const User = require('../models/user');
 const Profile = require('../models/profile');
-const mongoose = require('mongoose');
 
 const handleLandingPage = (req, res) => {
     res.render('landingPage', {
@@ -39,8 +37,27 @@ const handleSearchUser = async (req, res) => {
     return res.json({profiles});
 }
 
+const handleTagSearch = async (req, res) => {
+    const query = req.body.query;
+    const profile = await Profile.findOne({user : req.user.id});
+    const pins = await Pin.aggregate([
+        {
+          $search:
+            {
+              index: "tag-search",
+              text: {
+                query,
+                path: ["title", "description", "tags"],
+              },
+            },
+        },
+    ])
+    return res.render('searchPage', {user: req.user, pins, profile});
+}
+
 module.exports = {
     handleLandingPage,
     handleFeedDisplay,
-    handleSearchUser
+    handleSearchUser,
+    handleTagSearch,
 }
