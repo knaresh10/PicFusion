@@ -17,6 +17,46 @@ const setSearchBoardPosition = () => {
   searchBoard.style.top = bottomPosition + "px";
 };
 
+function downloadImage(url, filename) {
+  const getFileExtensionFromUrl = (url) => {
+    try {
+      const urlObject = new URL(url);
+      const pathname = urlObject.pathname;
+      const fileExtension = pathname.split('.').pop();
+      return fileExtension.toLowerCase();
+    } catch (error) {
+      console.error('Error parsing URL:', error);
+      return null;
+    }
+  };
+
+  const fileExtension = getFileExtensionFromUrl(url);
+
+  if (!fileExtension) {
+    console.error('Could not determine file extension from URL:', url);
+    return;
+  }
+
+  fetch(url)
+    .then(response => response.blob())
+    .then(blob => {
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = filename + '.' + fileExtension; // Append file extension to filename
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+    })
+    .catch(err => console.error('Error downloading image:', err));
+}
+
+document.getElementById('download-icon').addEventListener('click', () => {
+  // console.log(pinURL// You can specify any desired file name
+  
+  downloadImage(pinURL, pinTitle);
+});
+
 // search function implementation for boards
 
 const search = () => {

@@ -2,7 +2,7 @@ const { Router } = require("express");
 const {handleVerifyUser, handleVerifyOTPandCreateUser, handleSendOTP, handleForgotPasswordSendOTP, handleForgotPasswordVerifyOTP, handleNewPassword, handleGetLandingPage, handleGetSignUpPage, handleGetLoginPage, handleLogout, handleGetForgotPasswordPage, handleGetNewPasswordPage } = require("../controllers/auth");
 const {checkForAuthentication} = require('../middleware/auth');
 const router = Router();
-
+const axios = require('axios');
 router.get('/', handleGetLandingPage);
 router.get('/signup', handleGetSignUpPage);
 router.post('/send-otp', handleSendOTP);
