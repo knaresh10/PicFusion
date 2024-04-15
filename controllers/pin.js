@@ -43,10 +43,10 @@ const handleCreatePin = async (req, res) => {
   if (!req.file) {
     return res.status(400).json({ error: "Please upload a file" });
   }
-  const { title, description, tags } = req.body;
-
+  let { title, description, tags } = req.body;
+  tags = tags.trim();
   let tagArray;
-  if (tags !== "") tagArray = tags.tirm().split(" ");
+  if (tags !== "") tagArray = tags.split(" ");
 
   const url = await s3Upload.s3PinUpload(req.file, "pins");
 

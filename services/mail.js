@@ -19,8 +19,6 @@ const sendMailToUser = async (to, html, subject) => {
         subject,
         html,
     }
-
-
     transporter.sendMail(options, (err, info) => {
         // console.log(info);
     })
