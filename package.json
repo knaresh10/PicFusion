@@ -6,7 +6,7 @@
   "scripts": {
     "start": "nodemon server.js",
     "build:css": "npx tailwindcss -i ./public/css/style.css -o ./public/css/output.css --watch",
-    "test": "mocha ./tests/**/mail.spec.js --timeout 3000 --exit",
+    "test": "mocha ./tests/**/*.spec.js --timeout 3000 --exit",
     "test:coverage": "nyc --reporter=html --reporter=text mocha tests/**/*.spec.js --timeout 5000 --exit"
   },
   "repository": {
