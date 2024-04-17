@@ -1,7 +1,4 @@
-const {uploadS3} = require('../middleware/multer')
-const {S3Client, ListObjectsV2Command, DeleteObjectCommand, GetObjectCommand, PutObjectCommand}=require('@aws-sdk/client-s3');
-const {Upload}=require('@aws-sdk/lib-storage');
-const { getSignedUrl } = require('@aws-sdk/s3-request-presigner');
+const {S3Client, PutObjectCommand}=require('@aws-sdk/client-s3');
 const {v4 : uuidv4} = require('uuid');
 const path = require('path')
 require('dotenv').config();

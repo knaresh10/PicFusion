@@ -40,7 +40,7 @@ const handleSendOTP = async (req, res) => {
         const html = `
                     <div>
                         <h1>Welcome to pinCraft</h1>
-                        <p>Here is your otp for registeration ${GeneratedOTP}</p>
+                        <p>Here is your otp for registeration <b><i>${GeneratedOTP}</i></b></p>
                     </div>
                     `
         await mail.sendMailToUser(email, html, subject);
@@ -145,7 +145,7 @@ const handleForgotPasswordSendOTP = async (req, res) => {
 
         const html = `
             <div>
-                <p>Here is your otp for resetting password ${otp}</p>
+                <p>Here is your otp for resetting password <b><i>${otp}</i></b></p>
             </div>
             `
 

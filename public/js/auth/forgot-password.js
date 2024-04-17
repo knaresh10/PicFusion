@@ -1,6 +1,13 @@
 const form = document.getElementById('forgot-password-form');
 const otpDiv = document.getElementById('otp-div');
 const submitBtn = document.getElementById('submit-btn');
+const otpInput = document.getElementById('otp-input');
+const showOtp = document.getElementById('show-otp');
+
+
+showOtp.addEventListener('click', () => {
+    otpInput.type = otpInput.type == 'text' ? 'password' : 'text';
+})
 
 function displayErrorMessage(id, message) {
     const errorElement = document.getElementById(id);
