@@ -55,9 +55,15 @@ const handleTagSearch = async (req, res) => {
     return res.render('searchPage', {user: req.user, pins, profile});
 }
 
+const handleGetData = async (req, res) => {
+    const data = await Profile.find();
+    return res.json({data});
+}
+
 module.exports = {
     handleLandingPage,
     handleFeedDisplay,
     handleSearchUser,
     handleTagSearch,
+    handleGetData,
 }
